@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SupportDeskt.Presentation (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "SupportDeskt.Presentation (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
