@@ -1,5 +1,6 @@
 ﻿using SupportDesk.Application.Tickets.Interfaces;
 using SupportDesk.Domain.Models;
+using SupportDesk.Domain.ValueObjects;
 using SupportDesk.Infrastructure.Tickets.Models;
 using System.Text.Json;
 
@@ -40,7 +41,7 @@ public class JsonTicketRepository : ITicketRepository
         };
 
         tickets.Add(ticketData);
-        
+
         string updatedJson = JsonSerializer.Serialize(
             tickets,
             new JsonSerializerOptions
@@ -49,5 +50,35 @@ public class JsonTicketRepository : ITicketRepository
             });
 
         File.WriteAllText(_filePath, updatedJson);
+    }
+
+    public IReadOnlyList<SupportTicket> GetAllTickets()
+    {
+        if (!File.Exists(_filePath))
+            return [];
+        string json = File.ReadAllText(_filePath);
+
+        List<TicketData> ticketDataList = JsonSerializer.Deserialize<List<TicketData>>(json) ?? [];
+
+        List<SupportTicket> tickets = [];
+        foreach (var ticketData in ticketDataList)
+        {
+            TicketTitle title = new(ticketData.Title);
+            TicketDescription description = new(ticketData.Description);
+
+            SupportTicket ticket = new(title, description)
+            {
+                Id = ticketData.Id,
+                Assignee = ticketData.Assignee,
+                AssignedCustomerId = ticketData.AssignedCustomerId,
+                Priority = ticketData.Priority,
+                Status = ticketData.Status,
+                CreatedAt = ticketData.CreatedAt,
+                UpdatedAt = ticketData.UpdatedAt
+            };
+            tickets.Add(ticket);
+            
+        } 
+        return tickets;
     }
 }

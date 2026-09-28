@@ -5,4 +5,6 @@ namespace SupportDesk.Application.Tickets.Interfaces;
 public interface ITicketRepository
 {
     void AddTicket(SupportTicket ticket);
+
+    IReadOnlyList<SupportTicket> GetAllTickets();
 }

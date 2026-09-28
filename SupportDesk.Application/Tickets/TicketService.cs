@@ -39,4 +39,14 @@ public class TicketService
         return supportTicket;
 
     }
+    public IReadOnlyList<SupportTicket> GetAllTickets()
+    {
+        var tickets = _ticketRepository
+            .GetAllTickets()
+            .OrderByDescending(t => t.CreatedAt)
+            .ToList();
+
+
+        return tickets;
+    }
 }
