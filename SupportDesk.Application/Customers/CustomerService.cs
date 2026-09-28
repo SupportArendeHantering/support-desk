@@ -1,5 +1,6 @@
 ﻿using SupportDesk.Application.Customers.Interfaces;
 using SupportDesk.Domain.Models;
+using SupportDesk.Domain.ValueObjects;
 
 namespace SupportDesk.Application.Customers;
 
