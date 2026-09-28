@@ -13,8 +13,16 @@ public class TicketService
         _ticketRepository = ticketRepository;
     }
 
-    public SupportTicket RegisterTicket(string title, string description)
+    public SupportTicket RegisterTicket(
+        string title,
+        string description,
+        Guid customerId,
+        TicketPriority priority)
+
     {
+        if (customerId == Guid.Empty)
+            throw new ArgumentException("Customer is required.", nameof(customerId));
+
         TicketTitle ticketTitle = new(title);
         TicketDescription ticketDescription = new(description);
 
@@ -22,6 +30,8 @@ public class TicketService
         SupportTicket supportTicket = new(ticketTitle, ticketDescription)
         {
             Id = Guid.NewGuid(),
+            AssignedCustomerId = customerId,
+            Priority = priority
         };
 
         _ticketRepository.AddTicket(supportTicket);
