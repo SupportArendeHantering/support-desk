@@ -49,4 +49,11 @@ public class TicketService
 
         return tickets;
     }
+    public void UpdateTicketDetails(SupportTicket ticket, string title, string description)
+    {
+        ticket.ChangeTitle(title);
+        ticket.ChangeDescription(description);
+
+        _ticketRepository.UpdateTicket(ticket);
+    }
 }

@@ -7,4 +7,6 @@ public interface ITicketRepository
     void AddTicket(SupportTicket ticket);
 
     IReadOnlyList<SupportTicket> GetAllTickets();
+
+    void UpdateTicket(SupportTicket ticket);
 }

@@ -81,4 +81,34 @@ public class JsonTicketRepository : ITicketRepository
         } 
         return tickets;
     }
+    public void UpdateTicket(SupportTicket ticket)
+    {
+        if (!File.Exists(_filePath))
+            throw new InvalidOperationException("Ticket does not exist.");
+        string json = File.ReadAllText(_filePath);
+
+        List<TicketData> tickets = JsonSerializer.Deserialize<List<TicketData>>(json)
+            ?? throw new InvalidOperationException("Could not load ticket.");
+        
+        TicketData? existingTicket = tickets.FirstOrDefault(t => t.Id == ticket.Id);
+
+        if (existingTicket == null)
+            throw new InvalidOperationException("Ticket not found");
+
+        existingTicket.Title = ticket.Title.Value;
+        existingTicket.Description = ticket.Description.Value;
+        existingTicket.Assignee = ticket.Assignee;
+        existingTicket.AssignedCustomerId = ticket.AssignedCustomerId;
+        existingTicket.Priority = ticket.Priority;
+        existingTicket.Status = ticket.Status;
+        existingTicket.UpdatedAt = ticket.UpdatedAt;
+
+        string updatedJson = JsonSerializer.Serialize(
+            tickets,
+            new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+        File.WriteAllText(_filePath, updatedJson);
+    }
 }
