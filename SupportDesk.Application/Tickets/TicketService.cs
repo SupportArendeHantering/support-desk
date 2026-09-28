@@ -1,5 +1,6 @@
 ﻿using SupportDesk.Application.Tickets.Interfaces;
 using SupportDesk.Domain.Models;
+using SupportDesk.Domain.ValueObjects;
 
 namespace SupportDesk.Application.Tickets;
 
@@ -14,16 +15,13 @@ public class TicketService
 
     public SupportTicket RegisterTicket(string title, string description)
     {
-        if (string.IsNullOrWhiteSpace(title))
-            throw new ArgumentException("Title is required.");
-        if (string.IsNullOrWhiteSpace(description))
-            throw new ArgumentException("Description is required.");
+        TicketTitle ticketTitle = new(title);
+        TicketDescription ticketDescription = new(description);
 
-        SupportTicket supportTicket = new()
+
+        SupportTicket supportTicket = new(ticketTitle, ticketDescription)
         {
             Id = Guid.NewGuid(),
-            Title = title,
-            Description = description
         };
 
         _ticketRepository.AddTicket(supportTicket);

@@ -1,10 +1,12 @@
-﻿namespace SupportDesk.Domain.Models;
+﻿using SupportDesk.Domain.ValueObjects;
 
-public class SupportTicket
+namespace SupportDesk.Domain.Models;
+
+public class SupportTicket(TicketTitle title, TicketDescription description)
 {
     public Guid Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
+    public TicketTitle Title { get; set; } = title;
+    public TicketDescription Description { get; set; } = description;
     public Guid Assignee { get; set; }
     public Guid AssignedCustomerId { get; set; }
     public TicketPriority Priority { get; set; } = TicketPriority.Low;
