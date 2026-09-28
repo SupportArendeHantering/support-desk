@@ -56,4 +56,10 @@ public class TicketService
 
         _ticketRepository.UpdateTicket(ticket);
     }
+    public void ChangePriority(SupportTicket ticket, TicketPriority priority)
+    {
+        ticket.ChangePriority(priority);
+
+        _ticketRepository.UpdateTicket(ticket);
+    }
 }

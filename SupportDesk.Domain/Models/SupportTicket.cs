@@ -24,4 +24,9 @@ public class SupportTicket(TicketTitle title, TicketDescription description)
         Description =new TicketDescription(description);
         UpdatedAt=DateTime.UtcNow;
     }
+    public void ChangePriority(TicketPriority priority)
+    {
+        Priority = priority;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }
