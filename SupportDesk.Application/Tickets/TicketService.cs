@@ -62,4 +62,9 @@ public class TicketService
 
         _ticketRepository.UpdateTicket(ticket);
     }
+    public void ChangeStatus(SupportTicket ticket, TicketStatus status)
+    {
+        ticket.ChangeStatus(status);
+        _ticketRepository.UpdateTicket(ticket);
+    }
 }

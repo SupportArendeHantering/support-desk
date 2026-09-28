@@ -29,4 +29,14 @@ public class SupportTicket(TicketTitle title, TicketDescription description)
         Priority = priority;
         UpdatedAt = DateTime.UtcNow;
     }
+    public void ChangeStatus(TicketStatus status)
+    {
+        if((status == TicketStatus.Ongoing || status == TicketStatus.Resolved)&& Assignee is null)
+        {
+            throw new InvalidOperationException("An assignee is required before changing the status.");
+        }
+
+        Status = status;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }
