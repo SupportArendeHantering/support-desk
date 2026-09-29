@@ -7,4 +7,6 @@ public interface ICustomerRepository
     Task AddCustomerAsync(Customer customer);
 
     Task<IReadOnlyList<Customer>> GetAllCustomersAsync();
+
+    Task UpdateCustomerAsync(Customer customer);
 }
