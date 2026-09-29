@@ -5,4 +5,6 @@ namespace SupportDesk.Application.Customers.Interfaces;
 public interface ICustomerRepository
 {
     Task AddCustomerAsync(Customer customer);
+
+    Task<IReadOnlyList<Customer>> GetAllCustomersAsync();
 }

@@ -1,5 +1,6 @@
 ﻿using SupportDesk.Application.Customers.Interfaces;
 using SupportDesk.Domain.Models;
+using SupportDesk.Domain.ValueObjects;
 using SupportDesk.Infrastructure.Customers.Models;
 using SupportDesk.Infrastructure.Settings;
 using System.Text.Json;
@@ -17,22 +18,7 @@ public class JsonCustomerRepository : ICustomerRepository
 
     public async Task AddCustomerAsync(Customer customer)
     {
-        List<CustomerData> customers;
-
-        if (File.Exists(_filePath))
-        {
-            string json = await File.ReadAllTextAsync(_filePath);
-
-            customers =
-                JsonSerializer.Deserialize<List<CustomerData>>(
-                    json,
-                    JsonSettings.SerializerOptions)
-                ?? new List<CustomerData>();
-        }
-        else
-        {
-            customers = new List<CustomerData>();
-        }
+        List<CustomerData> customers = await GetAllCustomerDataListAsync();
 
         var customerData = new CustomerData
         {
@@ -48,5 +34,31 @@ public class JsonCustomerRepository : ICustomerRepository
             JsonSettings.SerializerOptions);
 
         await File.WriteAllTextAsync(_filePath, updatedJson);
+    }
+
+    private async Task<List<CustomerData>> GetAllCustomerDataListAsync()
+    {
+        if (!File.Exists(_filePath))
+            return [];
+
+        string json = await File.ReadAllTextAsync(_filePath);
+
+        return JsonSerializer.Deserialize<List<CustomerData>>(
+                   json,
+                   JsonSettings.SerializerOptions)
+               ?? [];
+    }
+
+    public async Task<IReadOnlyList<Customer>> GetAllCustomersAsync()
+    {
+        List<CustomerData> customerDataList = await GetAllCustomerDataListAsync();
+
+        var customers = customerDataList.Select(data =>
+            new Customer(new CustomerName(data.Name), new Email(data.Email))
+            {
+                Id = data.Id
+            }).ToList();
+
+        return customers;
     }
 }

@@ -1,16 +1,19 @@
-﻿using SupportDesk.Application.Tickets.Interfaces;
+﻿using SupportDesk.Application.Customers;
+using SupportDesk.Application.Tickets.Interfaces;
 using SupportDesk.Domain.Models;
 using SupportDesk.Domain.ValueObjects;
 
 namespace SupportDesk.Application.Tickets;
 
-public class TicketService
+public class TicketService : ITicketService
 {
     private readonly ITicketRepository _ticketRepository;
+    private readonly ICustomerService _customerService;
 
-    public TicketService(ITicketRepository ticketRepository)
+    public TicketService(ITicketRepository ticketRepository, ICustomerService customerService)
     {
         _ticketRepository = ticketRepository;
+        _customerService = customerService;
     }
 
     public async Task<SupportTicket> RegisterTicketAsync(
@@ -75,5 +78,19 @@ public class TicketService
         ticket.ChangeStatus(status);
 
         await _ticketRepository.UpdateTicketAsync(ticket);
+    }
+
+    public async Task AssignCustomerToTicketAsync(
+        SupportTicket ticket,
+        Guid customerId)
+    {
+        ticket.AssignCustomerId(customerId);
+        await _ticketRepository.UpdateTicketAsync(ticket);
+    }
+
+    public async Task<Customer> GetAssignedCustomer(SupportTicket ticket)
+    {
+        var assignedCustomer = await _customerService.GetCustomerByIdAsync(ticket.AssignedCustomerId);
+        return assignedCustomer;
     }
 }

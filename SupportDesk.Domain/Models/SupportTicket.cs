@@ -39,4 +39,10 @@ public class SupportTicket(TicketTitle title, TicketDescription description)
         Status = status;
         UpdatedAt = DateTime.UtcNow;
     }
+
+    public void AssignCustomerId(Guid customerId)
+    {
+        AssignedCustomerId = customerId;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }
