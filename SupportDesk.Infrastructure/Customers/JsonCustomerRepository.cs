@@ -1,7 +1,8 @@
-﻿using System.Text.Json;
-using SupportDesk.Application.Customers.Interfaces;
+﻿using SupportDesk.Application.Customers.Interfaces;
 using SupportDesk.Domain.Models;
 using SupportDesk.Infrastructure.Customers.Models;
+using SupportDesk.Infrastructure.Settings;
+using System.Text.Json;
 
 namespace SupportDesk.Infrastructure.Customers;
 
@@ -14,16 +15,19 @@ public class JsonCustomerRepository : ICustomerRepository
         _filePath = filePath;
     }
 
-    public void AddCustomer(Customer customer)
+    public async Task AddCustomerAsync(Customer customer)
     {
         List<CustomerData> customers;
 
         if (File.Exists(_filePath))
         {
-            string json = File.ReadAllText(_filePath);
+            string json = await File.ReadAllTextAsync(_filePath);
 
-            customers = JsonSerializer.Deserialize<List<CustomerData>>(json)
-                        ?? new List<CustomerData>();
+            customers =
+                JsonSerializer.Deserialize<List<CustomerData>>(
+                    json,
+                    JsonSettings.SerializerOptions)
+                ?? new List<CustomerData>();
         }
         else
         {
@@ -41,11 +45,8 @@ public class JsonCustomerRepository : ICustomerRepository
 
         string updatedJson = JsonSerializer.Serialize(
             customers,
-            new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
+            JsonSettings.SerializerOptions);
 
-        File.WriteAllText(_filePath, updatedJson);
+        await File.WriteAllTextAsync(_filePath, updatedJson);
     }
 }

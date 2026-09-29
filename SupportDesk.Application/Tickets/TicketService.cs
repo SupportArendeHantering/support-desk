@@ -13,19 +13,19 @@ public class TicketService
         _ticketRepository = ticketRepository;
     }
 
-    public SupportTicket RegisterTicket(
-        string title,
-        string description,
-        Guid customerId,
-        TicketPriority priority)
-
+    public async Task<SupportTicket> RegisterTicketAsync(
+     string title,
+     string description,
+     Guid customerId,
+     TicketPriority priority)
     {
         if (customerId == Guid.Empty)
-            throw new ArgumentException("Customer is required.", nameof(customerId));
+            throw new ArgumentException(
+                "Customer is required.",
+                nameof(customerId));
 
         TicketTitle ticketTitle = new(title);
         TicketDescription ticketDescription = new(description);
-
 
         SupportTicket supportTicket = new(ticketTitle, ticketDescription)
         {
@@ -34,37 +34,46 @@ public class TicketService
             Priority = priority
         };
 
-        _ticketRepository.AddTicket(supportTicket);
+        await _ticketRepository.AddTicketAsync(supportTicket);
 
         return supportTicket;
-
     }
-    public IReadOnlyList<SupportTicket> GetAllTickets()
+
+    public async Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync()
     {
-        var tickets = _ticketRepository
-            .GetAllTickets()
+        var tickets = await _ticketRepository.GetAllTicketsAsync();
+
+        return tickets
             .OrderByDescending(t => t.CreatedAt)
             .ToList();
-
-
-        return tickets;
     }
-    public void UpdateTicketDetails(SupportTicket ticket, string title, string description)
+
+    public async Task UpdateTicketDetailsAsync(
+     SupportTicket ticket,
+     string title,
+     string description)
     {
         ticket.ChangeTitle(title);
         ticket.ChangeDescription(description);
 
-        _ticketRepository.UpdateTicket(ticket);
+        await _ticketRepository.UpdateTicketAsync(ticket);
     }
-    public void ChangePriority(SupportTicket ticket, TicketPriority priority)
+
+    public async Task ChangePriorityAsync(
+    SupportTicket ticket,
+    TicketPriority priority)
     {
         ticket.ChangePriority(priority);
 
-        _ticketRepository.UpdateTicket(ticket);
+        await _ticketRepository.UpdateTicketAsync(ticket);
     }
-    public void ChangeStatus(SupportTicket ticket, TicketStatus status)
+
+    public async Task ChangeStatusAsync(
+    SupportTicket ticket,
+    TicketStatus status)
     {
         ticket.ChangeStatus(status);
-        _ticketRepository.UpdateTicket(ticket);
+
+        await _ticketRepository.UpdateTicketAsync(ticket);
     }
 }

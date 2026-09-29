@@ -14,7 +14,7 @@ public class CustomerService
     }
 
 
-public Customer RegisterCustomer(string name, string email)
+    public async Task<Customer> RegisterCustomerAsync(string name, string email)
     {
         var customerName = new CustomerName(name);
         var customerEmail = new Email(email);
@@ -24,7 +24,7 @@ public Customer RegisterCustomer(string name, string email)
             Id = Guid.NewGuid()
         };
 
-        _customerRepository.AddCustomer(customer);  
+        await _customerRepository.AddCustomerAsync(customer);
 
         return customer;
     }

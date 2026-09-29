@@ -4,9 +4,9 @@ namespace SupportDesk.Application.Tickets.Interfaces;
 
 public interface ITicketRepository
 {
-    void AddTicket(SupportTicket ticket);
+    Task AddTicketAsync(SupportTicket ticket);
 
-    IReadOnlyList<SupportTicket> GetAllTickets();
+    Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync();
 
-    void UpdateTicket(SupportTicket ticket);
+    Task UpdateTicketAsync(SupportTicket ticket);
 }
