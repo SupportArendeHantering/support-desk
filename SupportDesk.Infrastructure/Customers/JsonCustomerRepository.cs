@@ -61,4 +61,25 @@ public class JsonCustomerRepository : ICustomerRepository
 
         return customers;
     }
+
+    public async Task UpdateCustomerAsync(Customer customer)
+    {
+        List<CustomerData> customers =
+            await GetAllCustomerDataListAsync();
+
+        CustomerData? existingCustomer =
+            customers.FirstOrDefault(c => c.Id == customer.Id);
+
+        if (existingCustomer is null)
+            throw new InvalidOperationException("Customer not found.");
+
+        existingCustomer.Name = customer.Name.Value;
+        existingCustomer.Email = customer.Email.Value;
+
+        string updatedJson = JsonSerializer.Serialize(
+            customers,
+            JsonSettings.SerializerOptions);
+
+        await File.WriteAllTextAsync(_filePath, updatedJson);
+    }
 }

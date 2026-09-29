@@ -40,4 +40,20 @@ public class CustomerService : ICustomerService
 
         return customer;
     }
+
+    public async Task<IReadOnlyList<Customer>> GetAllCustomersAsync()
+    {
+        return await _customerRepository.GetAllCustomersAsync();
+    }
+
+    public async Task UpdateCustomerAsync(
+        Customer customer,
+        string name,
+        string email)
+    {
+        customer.Rename(new CustomerName(name));
+        customer.ChangeEmail(new Email(email));
+
+        await _customerRepository.UpdateCustomerAsync(customer);
+    }
 }
