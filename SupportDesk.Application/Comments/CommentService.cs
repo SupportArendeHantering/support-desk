@@ -4,10 +4,10 @@ using SupportDesk.Domain.ValueObjects;
 
 namespace SupportDesk.Application.Comments;
 
-public class CommentService
+public class CommentService : ICommentService
 {
     private readonly ICommentRepository _commentRepository;
-    public CommentService (ICommentRepository commentRepository)
+    public CommentService(ICommentRepository commentRepository)
     {
         _commentRepository = commentRepository;
     }
