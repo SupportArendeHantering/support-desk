@@ -4,7 +4,7 @@ using SupportDesk.Domain.ValueObjects;
 
 namespace SupportDesk.Application.Customers;
 
-public class CustomerService
+public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
 
@@ -12,7 +12,6 @@ public class CustomerService
     {
         _customerRepository = customerRepository;
     }
-
 
     public async Task<Customer> RegisterCustomerAsync(string name, string email)
     {
@@ -28,5 +27,17 @@ public class CustomerService
 
         return customer;
     }
-}
 
+    public async Task<Customer> GetCustomerByIdAsync(Guid customerId)
+    {
+        var customers = await _customerRepository.GetAllCustomersAsync();
+        var customer = customers.FirstOrDefault(customer => customer.Id == customerId);
+
+        if (customer is null)
+        {
+            throw new InvalidOperationException("The customer with the specified ID does not exist.");
+        }
+
+        return customer;
+    }
+}
