@@ -6,5 +6,12 @@ namespace SupportDesk.Application.Customers
     {
         Task<Customer> GetCustomerByIdAsync(Guid customerId);
         Task<Customer> RegisterCustomerAsync(string name, string email);
+
+        Task<IReadOnlyList<Customer>> GetAllCustomersAsync();
+
+        Task UpdateCustomerAsync(
+            Customer customer,
+            string name,
+            string email);
     }
 }
