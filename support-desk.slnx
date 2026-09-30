@@ -7,6 +7,7 @@
   <Project Path="SupportDesk.Application/SupportDesk.Application.csproj" />
   <Project Path="SupportDesk.Domain/SupportDesk.Domain.csproj" />
   <Project Path="SupportDesk.Infrastructure/SupportDesk.Infrastructure.csproj" />
+  <Project Path="SupportDesk.Test/SupportDesk.Test.csproj" Id="1ca5bf7a-d2ab-4bd9-9af0-6d43ba879226" />
   <Project Path="SupportDeskt.Presentation/SupportDeskt.Presentation.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
