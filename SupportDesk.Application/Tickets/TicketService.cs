@@ -147,4 +147,16 @@ public class TicketService : ITicketService
             .OrderByDescending(ticket => ticket.CreatedAt)
             .ToList();
     }
+
+    public async Task<IReadOnlyList<SupportTicket>> GetTicketsByStatusAsync(IReadOnlyList<TicketStatus>? statuses)
+    {
+        var allTickets = await _ticketRepository.GetAllTicketsAsync();
+
+        if (statuses == null || !statuses.Any())
+        {
+            return allTickets;
+        }
+
+        return [.. allTickets.Where(ticket => statuses.Contains(ticket.Status))];
+    }
 }
