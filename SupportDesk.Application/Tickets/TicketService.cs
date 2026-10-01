@@ -99,4 +99,52 @@ public class TicketService : ITicketService
         ticket.AssignAssignee(assigneeId);
         await _ticketRepository.UpdateTicketAsync(ticket);
     }
+
+    public async Task<IReadOnlyList<SupportTicket>> SearchTicketsByTitleAsync(string searchTerm)
+    {
+        var tickets = await _ticketRepository.GetAllTicketsAsync();
+
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            return tickets
+                .OrderByDescending(ticket => ticket.CreatedAt)
+                .ToList();
+        }
+
+        return tickets
+            .Where(ticket =>
+                ticket.Title.Value.Contains(
+                    searchTerm,
+                    StringComparison.OrdinalIgnoreCase))
+            .OrderByDescending(ticket => ticket.CreatedAt)
+            .ToList();
+    }
+
+    public async Task<IReadOnlyList<SupportTicket>> SearchTicketsByCustomerNameAsync(string searchTerm)
+    {
+        var tickets = await _ticketRepository.GetAllTicketsAsync();
+
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            return tickets
+                .OrderByDescending(ticket => ticket.CreatedAt)
+                .ToList();
+        }
+
+        var customers = await _customerService.GetAllCustomersAsync();
+
+        var matchingCustomerIds = customers
+            .Where(customer =>
+                customer.Name.Value.Contains(
+                    searchTerm,
+                    StringComparison.OrdinalIgnoreCase))
+            .Select(customer => customer.Id)
+            .ToHashSet();
+
+        return tickets
+            .Where(ticket =>
+                matchingCustomerIds.Contains(ticket.AssignedCustomerId))
+            .OrderByDescending(ticket => ticket.CreatedAt)
+            .ToList();
+    }
 }

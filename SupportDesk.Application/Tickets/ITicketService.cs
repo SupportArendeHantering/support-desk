@@ -12,5 +12,7 @@ namespace SupportDesk.Application.Tickets
         Task<SupportTicket> RegisterTicketAsync(string title, string description, Guid customerId, TicketPriority priority);
         Task UpdateTicketDetailsAsync(SupportTicket ticket, string title, string description);
         Task AssignAssigneeAsync(SupportTicket ticket, int assigneeId);
+        Task<IReadOnlyList<SupportTicket>> SearchTicketsByTitleAsync(string searchTerm);
+        Task<IReadOnlyList<SupportTicket>> SearchTicketsByCustomerNameAsync(string searchTerm);
     }
 }
