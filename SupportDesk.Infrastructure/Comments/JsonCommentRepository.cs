@@ -1,5 +1,6 @@
 ﻿using SupportDesk.Application.Comments.Interfaces;
 using SupportDesk.Domain.Models;
+using SupportDesk.Domain.ValueObjects;
 using SupportDesk.Infrastructure.Comments.Models;
 using SupportDesk.Infrastructure.Settings;
 using SupportDesk.Infrastructure.Tickets.Models;
@@ -27,8 +28,8 @@ public class JsonCommentRepository : ICommentRepository
             JsonSettings.SerializerOptions)
             ?? throw new InvalidOperationException("Could not load tickets.");
 
-        TicketData? existingTicket = 
-            tickets.FirstOrDefault(t => t.Id == ticketComment.TicketId);
+        TicketData? existingTicket =
+            tickets.FirstOrDefault(ticket => ticket.Id == ticketComment.TicketId);
 
         if (existingTicket == null)
             throw new InvalidOperationException("Ticket not found.");
@@ -52,6 +53,43 @@ public class JsonCommentRepository : ICommentRepository
 
         await File.WriteAllTextAsync(_filePath, updatedJson);
 
-        
+
+    }
+    public async Task<IReadOnlyList<TicketComment>> GetCommentsByTicketIdAsync(Guid ticketId)
+    {
+        if (!File.Exists(_filePath))
+            return [];
+
+        string json = await File.ReadAllTextAsync(_filePath);
+
+        List<TicketData> tickets =
+            JsonSerializer.Deserialize<List<TicketData>>(
+                json, JsonSettings.SerializerOptions)
+            ?? [];
+
+        TicketData? existingTicket =
+            tickets.FirstOrDefault(ticket => ticket.Id == ticketId);
+
+        if (existingTicket == null)
+            return [];
+
+        List<TicketComment> comments = [];
+
+        foreach (CommentData commentData in existingTicket.Comments ?? [])
+        {
+            TicketComment ticketComment = new()
+            {
+                CommentId = commentData.CommentId,
+                TicketId = commentData.TicketId,
+                CreatedBy = commentData.CreatedBy,
+                CommentText = new CommentText(commentData.CommentText),
+                CreatedAt = commentData.CreatedAt
+            };
+
+            comments.Add(ticketComment);
+        }
+
+        return comments;
     }
 }
+    
