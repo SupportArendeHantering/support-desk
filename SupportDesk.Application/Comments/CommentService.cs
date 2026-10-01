@@ -33,4 +33,12 @@ public class CommentService : ICommentService
         };
         await _commentRepository.AddCommentAsync(ticketComment);
     }
+
+    public async Task<IReadOnlyList<TicketComment>> GetCommentsByTicketIdAsync(Guid ticketId)
+    {
+        if (ticketId == Guid.Empty)
+            throw new ArgumentException("Ticket is required.", nameof(ticketId));
+
+        return await _commentRepository.GetCommentsByTicketIdAsync(ticketId);
+    }
 }
