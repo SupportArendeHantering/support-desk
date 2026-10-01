@@ -88,9 +88,15 @@ public class TicketService : ITicketService
         await _ticketRepository.UpdateTicketAsync(ticket);
     }
 
-    public async Task<Customer> GetAssignedCustomer(SupportTicket ticket)
+    public async Task<Customer> GetAssignedCustomerAsync(SupportTicket ticket)
     {
         var assignedCustomer = await _customerService.GetCustomerByIdAsync(ticket.AssignedCustomerId);
         return assignedCustomer;
+    }
+
+    public async Task AssignAssigneeAsync(SupportTicket ticket, int assigneeId)
+    {
+        ticket.AssignAssignee(assigneeId);
+        await _ticketRepository.UpdateTicketAsync(ticket);
     }
 }

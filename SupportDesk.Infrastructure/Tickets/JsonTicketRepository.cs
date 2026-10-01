@@ -38,7 +38,7 @@ public class JsonTicketRepository : ITicketRepository
             Id = ticket.Id,
             Title = ticket.Title.Value,
             Description = ticket.Description.Value,
-            Assignee = ticket.Assignee,
+            AssigneeId = ticket.AssigneeId,
             AssignedCustomerId = ticket.AssignedCustomerId,
             Priority = ticket.Priority,
             Status = ticket.Status,
@@ -77,7 +77,7 @@ public class JsonTicketRepository : ITicketRepository
             SupportTicket ticket = new(title, description)
             {
                 Id = ticketData.Id,
-                Assignee = ticketData.Assignee,
+                AssigneeId = ticketData.AssigneeId,
                 AssignedCustomerId = ticketData.AssignedCustomerId,
                 Priority = ticketData.Priority,
                 Status = ticketData.Status,
@@ -112,7 +112,7 @@ public class JsonTicketRepository : ITicketRepository
 
         existingTicket.Title = ticket.Title.Value;
         existingTicket.Description = ticket.Description.Value;
-        existingTicket.Assignee = ticket.Assignee;
+        existingTicket.AssigneeId = ticket.AssigneeId;
         existingTicket.AssignedCustomerId = ticket.AssignedCustomerId;
         existingTicket.Priority = ticket.Priority;
         existingTicket.Status = ticket.Status;
