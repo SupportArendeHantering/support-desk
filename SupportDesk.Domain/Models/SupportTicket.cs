@@ -4,7 +4,7 @@ namespace SupportDesk.Domain.Models;
 
 public class SupportTicket(TicketTitle title, TicketDescription description)
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     public TicketTitle Title { get; set; } = title;
     public TicketDescription Description { get; set; } = description;
     public int? AssigneeId { get; set; }

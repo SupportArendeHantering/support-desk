@@ -99,4 +99,16 @@ public class TicketService : ITicketService
         ticket.AssignAssignee(assigneeId);
         await _ticketRepository.UpdateTicketAsync(ticket);
     }
+
+    public async Task<IReadOnlyList<SupportTicket>> GetTicketsByStatusAsync(IReadOnlyList<TicketStatus>? statuses)
+    {
+        var allTickets = await _ticketRepository.GetAllTicketsAsync();
+
+        if (statuses == null || !statuses.Any())
+        {
+            return allTickets;
+        }
+
+        return [.. allTickets.Where(ticket => statuses.Contains(ticket.Status))];
+    }
 }

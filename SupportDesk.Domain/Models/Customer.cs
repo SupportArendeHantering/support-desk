@@ -4,7 +4,7 @@ namespace SupportDesk.Domain.Models;
 
 public class Customer(CustomerName customerName, Email email)
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     public CustomerName Name { get; set; } = customerName;
     public Email Email { get; set; } = email;
 
