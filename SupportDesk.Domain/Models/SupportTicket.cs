@@ -7,7 +7,7 @@ public class SupportTicket(TicketTitle title, TicketDescription description)
     public Guid Id { get; set; }
     public TicketTitle Title { get; set; } = title;
     public TicketDescription Description { get; set; } = description;
-    public Guid? Assignee { get; set; }
+    public int? AssigneeId { get; set; }
     public Guid AssignedCustomerId { get; set; }
     public TicketPriority Priority { get; set; } = TicketPriority.Low;
     public TicketStatus Status { get; set; } = TicketStatus.New;
@@ -16,13 +16,13 @@ public class SupportTicket(TicketTitle title, TicketDescription description)
 
     public void ChangeTitle(string title)
     {
-        Title =new TicketTitle(title);
+        Title = new TicketTitle(title);
         UpdatedAt = DateTime.UtcNow;
     }
     public void ChangeDescription(string description)
     {
-        Description =new TicketDescription(description);
-        UpdatedAt=DateTime.UtcNow;
+        Description = new TicketDescription(description);
+        UpdatedAt = DateTime.UtcNow;
     }
     public void ChangePriority(TicketPriority priority)
     {
@@ -31,7 +31,7 @@ public class SupportTicket(TicketTitle title, TicketDescription description)
     }
     public void ChangeStatus(TicketStatus status)
     {
-        if((status == TicketStatus.Ongoing || status == TicketStatus.Resolved)&& Assignee is null)
+        if ((status == TicketStatus.Ongoing || status == TicketStatus.Resolved) && AssigneeId is null)
         {
             throw new InvalidOperationException("An assignee is required before changing the status.");
         }
@@ -43,6 +43,12 @@ public class SupportTicket(TicketTitle title, TicketDescription description)
     public void AssignCustomerId(Guid customerId)
     {
         AssignedCustomerId = customerId;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void AssignAssignee(int assigneeId)
+    {
+        AssigneeId = assigneeId;
         UpdatedAt = DateTime.UtcNow;
     }
 }

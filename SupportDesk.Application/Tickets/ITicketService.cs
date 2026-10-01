@@ -8,8 +8,9 @@ namespace SupportDesk.Application.Tickets
         Task ChangePriorityAsync(SupportTicket ticket, TicketPriority priority);
         Task ChangeStatusAsync(SupportTicket ticket, TicketStatus status);
         Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync();
-        Task<Customer> GetAssignedCustomer(SupportTicket ticket);
+        Task<Customer> GetAssignedCustomerAsync(SupportTicket ticket);
         Task<SupportTicket> RegisterTicketAsync(string title, string description, Guid customerId, TicketPriority priority);
         Task UpdateTicketDetailsAsync(SupportTicket ticket, string title, string description);
+        Task AssignAssigneeAsync(SupportTicket ticket, int assigneeId);
     }
 }
