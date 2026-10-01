@@ -99,4 +99,24 @@ public class TicketService : ITicketService
         ticket.AssignAssignee(assigneeId);
         await _ticketRepository.UpdateTicketAsync(ticket);
     }
+
+    public async Task<IReadOnlyList<SupportTicket>> SearchTicketsByTitleAsync(string searchTerm)
+    {
+        var tickets = await _ticketRepository.GetAllTicketsAsync();
+
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            return tickets
+                .OrderByDescending(ticket => ticket.CreatedAt)
+                .ToList();
+        }
+
+        return tickets
+            .Where(ticket =>
+                ticket.Title.Value.Contains(
+                    searchTerm,
+                    StringComparison.OrdinalIgnoreCase))
+            .OrderByDescending(ticket => ticket.CreatedAt)
+            .ToList();
+    }
 }
