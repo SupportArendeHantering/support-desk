@@ -1,4 +1,5 @@
 ﻿using SupportDesk.Domain.Models;
+using SupportDesk.Infrastructure.Comments.Models;
 
 namespace SupportDesk.Infrastructure.Tickets.Models;
 
@@ -13,4 +14,5 @@ public class TicketData
     public TicketStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public List<CommentData> Comments { get; set; } = [];
 }
