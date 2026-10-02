@@ -159,4 +159,44 @@ public class TicketService : ITicketService
 
         return [.. allTickets.Where(ticket => statuses.Contains(ticket.Status))];
     }
+
+    public async Task<IReadOnlyList<SupportTicket>> SearchAndFilterTicketsAsync(
+    string? searchTerm,
+    IReadOnlyList<TicketStatus>? statuses)
+    {
+        var tickets = await _ticketRepository.GetAllTicketsAsync();
+
+        if (statuses != null && statuses.Any())
+        {
+            tickets = tickets
+                .Where(ticket => statuses.Contains(ticket.Status))
+                .ToList();
+        }
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            var customers = await _customerService.GetAllCustomersAsync();
+
+            var matchingCustomerIds = customers
+                .Where(customer =>
+                    customer.Name.Value.Contains(
+                        searchTerm,
+                        StringComparison.OrdinalIgnoreCase))
+                .Select(customer => customer.Id)
+                .ToHashSet();
+
+            tickets = tickets
+                .Where(ticket =>
+                    ticket.Title.Value.Contains(
+                        searchTerm,
+                        StringComparison.OrdinalIgnoreCase)
+                    ||
+                    matchingCustomerIds.Contains(ticket.AssignedCustomerId))
+                .ToList();
+        }
+
+        return tickets
+            .OrderByDescending(ticket => ticket.CreatedAt)
+            .ToList();
+    }
 }

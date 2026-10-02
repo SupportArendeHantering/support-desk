@@ -15,5 +15,6 @@ namespace SupportDesk.Application.Tickets
         Task<IReadOnlyList<SupportTicket>> SearchTicketsByTitleAsync(string searchTerm);
         Task<IReadOnlyList<SupportTicket>> SearchTicketsByCustomerNameAsync(string searchTerm);
         Task<IReadOnlyList<SupportTicket>> GetTicketsByStatusAsync(IReadOnlyList<TicketStatus>? statuses);
+        Task<IReadOnlyList<SupportTicket>> SearchAndFilterTicketsAsync(string? searchTerm,IReadOnlyList<TicketStatus>? statuses);
     }
 }
