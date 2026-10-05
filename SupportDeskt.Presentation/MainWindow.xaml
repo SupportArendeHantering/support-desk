@@ -7,13 +7,41 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Support Deskt">
+    Title="Support Desk">
 
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
+    <NavigationView
+        x:Name="MainNavigation"
+        PaneDisplayMode="Left"
+        IsBackButtonVisible="Collapsed"
+        IsSettingsVisible="False"
+        SelectionChanged="MainNavigation_SelectionChanged">
 
-    </Grid>
+        <NavigationView.MenuItems>
+
+            <NavigationViewItem
+                Content="Översikt"
+                Tag="Home"
+                Icon="Home" />
+
+            <NavigationViewItem
+                Content="Ärenden"
+                Tag="Ticket"
+                Icon="List" />
+
+            <NavigationViewItem
+                Content="Kunder"
+                Tag="Customer"
+                Icon="Contact" />
+
+        </NavigationView.MenuItems>
+
+        <ContentControl
+            Content="{x:Bind NavigationService.CurrentPage, Mode=OneWay}" />
+
+    </NavigationView>
+
 </Window>
