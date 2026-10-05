@@ -4,7 +4,7 @@ namespace SupportDesk.Test.Tickets;
 
 public class TicketAssigneesServiceTests
 {
-    private readonly TicketAssigneesService _ticketAssigneeService = new();
+    private readonly TicketAssigneeService _ticketAssigneeService = new();
 
     [Fact]
     public void GetAllAssignees_ReturnsAllPredefinedAssignees()
