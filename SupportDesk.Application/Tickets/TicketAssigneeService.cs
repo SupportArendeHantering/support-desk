@@ -1,6 +1,6 @@
 ﻿namespace SupportDesk.Application.Tickets;
 
-public class TicketAssigneesService : ITicketAssigneesService
+public class TicketAssigneeService : ITicketAssigneeService
 {
     private static readonly IReadOnlyList<TicketAssignee> _assignees =
     [
