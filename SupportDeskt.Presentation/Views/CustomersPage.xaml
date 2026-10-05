@@ -1,0 +1,23 @@
+<Page
+    x:Class="SupportDeskt.Presentation.Views.CustomersPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Padding="32">
+
+        <StackPanel Spacing="12">
+
+            <TextBlock
+                Text="Kunder"
+                FontSize="32"
+                FontWeight="SemiBold" />
+
+            <TextBlock
+                Text="Här kommer kundlistan och kundhanteringen visas."
+                FontSize="16" />
+
+        </StackPanel>
+
+    </Grid>
+
+</Page>
