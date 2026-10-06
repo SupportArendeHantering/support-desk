@@ -3,12 +3,13 @@ using Microsoft.UI.Xaml;
 using SupportDesk.Application;
 using SupportDesk.Infrastructure;
 using SupportDeskt.Presentation.Navigation;
+using SupportDeskt.Presentation.ViewModels;
 using SupportDeskt.Presentation.Views;
 using System;
 
 namespace SupportDeskt.Presentation;
 
-public partial class App : Microsoft.UI.Xaml.Application
+public partial class App : Application
 {
     private readonly IServiceProvider _provider;
     private Window? _window;
@@ -25,6 +26,8 @@ public partial class App : Microsoft.UI.Xaml.Application
         services.AddTransient<DashboardPage>();
         services.AddTransient<CustomersPage>();
         services.AddTransient<TicketsPage>();
+
+        services.AddTransient<CustomersPageViewModel>();
 
         services.AddApplication();
         services.AddInfrastructure();

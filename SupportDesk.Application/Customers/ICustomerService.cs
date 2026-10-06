@@ -9,7 +9,7 @@ namespace SupportDesk.Application.Customers
 
         Task<IReadOnlyList<Customer>> GetAllCustomersAsync();
 
-        Task UpdateCustomerAsync(
+        Task<Customer> UpdateCustomerAsync(
             Customer customer,
             string name,
             string email);

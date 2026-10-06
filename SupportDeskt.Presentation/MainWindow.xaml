@@ -40,6 +40,8 @@
         </NavigationView.MenuItems>
 
         <ContentControl
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
             Content="{x:Bind NavigationService.CurrentPage, Mode=OneWay}" />
 
     </NavigationView>

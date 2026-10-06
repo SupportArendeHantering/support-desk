@@ -13,7 +13,14 @@ namespace SupportDesk.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<ITicketRepository, JsonTicketRepository>();
-            services.AddScoped<ICustomerRepository, JsonCustomerRepository>();
+
+            var path = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "SupportDesk",
+                "customers.json");
+
+            services.AddScoped<ICustomerRepository, JsonCustomerRepository>(serviceProvider =>
+                new JsonCustomerRepository(path));
             services.AddScoped<ICommentRepository, JsonCommentRepository>();
             return services;
         }

@@ -29,11 +29,7 @@ public class JsonCustomerRepository : ICustomerRepository
 
         customers.Add(customerData);
 
-        string updatedJson = JsonSerializer.Serialize(
-            customers,
-            JsonSettings.SerializerOptions);
-
-        await File.WriteAllTextAsync(_filePath, updatedJson);
+        await WriteJsonToDisk(customers);
     }
 
     private async Task<List<CustomerData>> GetAllCustomerDataListAsync()
@@ -76,10 +72,17 @@ public class JsonCustomerRepository : ICustomerRepository
         existingCustomer.Name = customer.Name.Value;
         existingCustomer.Email = customer.Email.Value;
 
-        string updatedJson = JsonSerializer.Serialize(
-            customers,
-            JsonSettings.SerializerOptions);
+        await WriteJsonToDisk(customers);
+    }
 
-        await File.WriteAllTextAsync(_filePath, updatedJson);
+    private async Task WriteJsonToDisk(List<CustomerData> customers)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(_filePath)!);
+
+        var json = JsonSerializer.Serialize(customers, JsonSettings.SerializerOptions);
+        var temporaryPath = _filePath + ".tmp";
+
+        await File.WriteAllTextAsync(temporaryPath, json);
+        File.Move(temporaryPath, _filePath, overwrite: true);
     }
 }
