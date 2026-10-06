@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
 using SupportDesk.Domain.Models;
+using SupportDesk.Domain.ValueObjects;
 using SupportDeskt.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
@@ -18,6 +19,11 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
 
     [ObservableProperty]
     public partial string EmailAddress { get; set; } = string.Empty;
+    [ObservableProperty]
+    public partial string EditCustomerName { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string EditEmailAddress { get; set; } = string.Empty;
 
     private Customer? _selectedCustomer;
     public Customer? SelectedCustomer
@@ -83,9 +89,58 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
         finally
         {
             IsBusy = false;
-            StatusMessage = "Customer saved successfully.";
+            ResetInputFields();
+        }   
+    }
+
+    [RelayCommand]
+    private async Task UpdateCustomerAsync(Customer customer)
+    {
+        if (customer is null)
+        {
+            StatusMessage = "No customer provided.";
+            return;
         }
 
-       // navigationService.Navigate(AppPage.Customer);
+        IsBusy = true;
+        StatusMessage = string.Empty;
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(EditCustomerName) && string.IsNullOrWhiteSpace(EditEmailAddress))
+            {
+                StatusMessage = "No changes provided.";
+                return;
+            }
+
+            var newName = string.IsNullOrWhiteSpace(EditCustomerName) ? customer.Name.Value : new CustomerName(EditCustomerName).Value;
+            var newEmail = string.IsNullOrWhiteSpace(EditEmailAddress) ? customer.Email.Value : new Email(EditEmailAddress).Value;
+
+            await customerService.UpdateCustomerAsync(customer, newName, newEmail);
+
+            StatusMessage = "Customer updated successfully.";
+        }
+        catch (ArgumentException ex)
+        {
+            StatusMessage = ex.Message;
+        }
+        catch (Exception)
+        {
+            StatusMessage = "Customer could not be updated.";
+        }
+        finally
+        {
+            IsBusy = false;
+            ResetInputFields();
+        }
+    }
+
+
+    private void ResetInputFields()
+    {
+        CustomerName = string.Empty;
+        EmailAddress = string.Empty;
+        EditCustomerName = string.Empty;
+        EditEmailAddress = string.Empty;
     }
 }
