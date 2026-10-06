@@ -128,11 +128,15 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
             StatusMessage = "Customer updated successfully.";
 
             ResetInputFields();
-
         }
         catch (InvalidOperationException ex)
         {
             StatusMessage = ex.Message;
+        }
+        catch (ArgumentException ex)
+        {
+            StatusMessage = ex.Message;
+            return;
         }
         catch (Exception)
         {

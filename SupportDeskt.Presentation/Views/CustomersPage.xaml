@@ -9,27 +9,23 @@
 
     <Grid Padding="28" ColumnSpacing="24">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="0" />
-            <ColumnDefinition Width="*" MinWidth="0" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Left Add New Customer -->
         <StackPanel Grid.Column="0"
-                    Spacing="12"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
+                    Spacing="12">
 
             <TextBlock Text="Add New Customer"
                        FontSize="32"
                        FontWeight="SemiBold" />
 
-            <TextBox HorizontalAlignment="Stretch"
-                     Header="Customer Name"
+            <TextBox Header="Customer Name"
                      PlaceholderText="Customer name..."
                      Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay}" />
 
-            <TextBox HorizontalAlignment="Stretch"
-                     Header="Email Address"
+            <TextBox Header="Email Address"
                      PlaceholderText="Email address..."
                      Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay}" />
 
@@ -47,75 +43,70 @@
         </StackPanel>
 
         <!-- Right Customer List -->
-        <StackPanel Grid.Column="1"
-             Spacing="12"
-             HorizontalAlignment="Stretch"
-             VerticalAlignment="Stretch">
-            <TextBlock Text="Customers"
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
+            <StackPanel Grid.Column="1" Spacing="12">
+                <TextBlock Text="Customers"
                        FontSize="32"
                        FontWeight="SemiBold" />
 
+                <ListView Grid.Column="1"
+                  ItemsSource="{x:Bind ViewModel.Customers}">
 
-            <ListView Grid.Column="1"
-                  ItemsSource="{x:Bind ViewModel.Customers}"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="0" />
+                            <Setter Property="Margin" Value="0,0,0,12" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Customer">
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="Padding" Value="0" />
-                        <Setter Property="Margin" Value="0" />
-                        <Setter Property="Margin" Value="0,0,0,12" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Customer">
-
-                        <Expander
+                            <Expander
                              HorizontalAlignment="Stretch"
                              HorizontalContentAlignment="Stretch">
-                            <Expander.HeaderTemplate>
-                                <DataTemplate x:DataType="models:Customer">
-                                    <StackPanel Spacing="2">
-                                        <TextBlock Text="{x:Bind Name}" FontSize="16" FontWeight="SemiBold"/>
-                                        <TextBlock Text="{x:Bind Email}" FontSize="12" Foreground="Gray"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </Expander.HeaderTemplate>
+                                <Expander.HeaderTemplate>
+                                    <DataTemplate x:DataType="models:Customer">
+                                        <StackPanel Spacing="2">
+                                            <TextBlock Text="{x:Bind Name}" FontSize="16" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{x:Bind Email}" FontSize="12" Foreground="Gray"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </Expander.HeaderTemplate>
 
-                            <StackPanel Spacing="8"
+                                <StackPanel Spacing="8"
                                     HorizontalAlignment="Stretch">
 
-                                <TextBox HorizontalAlignment="Stretch"
+                                    <TextBox HorizontalAlignment="Stretch"
                                      Header="Change name to:"
                                      PlaceholderText="{x:Bind Name}"
                                      Text="{Binding ElementName=RootPage, Path=ViewModel.EditCustomerName, Mode=TwoWay}" />
 
-                                <TextBox HorizontalAlignment="Stretch"
+                                    <TextBox HorizontalAlignment="Stretch"
                                      Header="Change email to:"
                                      PlaceholderText="{x:Bind Email}"
                                      Text="{Binding ElementName=RootPage, Path=ViewModel.EditEmailAddress, Mode=TwoWay}" />
 
-                                <Button HorizontalAlignment="Stretch"
+                                    <Button HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Center"
                                     Command="{Binding ElementName=RootPage, Path=ViewModel.UpdateCustomerCommand}"
                                     CommandParameter="{x:Bind}">
-                                    <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <SymbolIcon Symbol="Edit" />
-                                        <TextBlock Text="Update" />
-                                    </StackPanel>
-                                </Button>
+                                        <StackPanel Orientation="Horizontal" Spacing="10">
+                                            <SymbolIcon Symbol="Edit" />
+                                            <TextBlock Text="Update" />
+                                        </StackPanel>
+                                    </Button>
 
-                            </StackPanel>
-                        </Expander>
+                                </StackPanel>
+                            </Expander>
 
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
 
-            </ListView>
-        </StackPanel>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
