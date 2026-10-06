@@ -46,7 +46,7 @@ public class CustomerService : ICustomerService
         return await _customerRepository.GetAllCustomersAsync();
     }
 
-    public async Task UpdateCustomerAsync(
+    public async Task<Customer> UpdateCustomerAsync(
         Customer customer,
         string name,
         string email)
@@ -55,5 +55,7 @@ public class CustomerService : ICustomerService
         customer.ChangeEmail(new Email(email));
 
         await _customerRepository.UpdateCustomerAsync(customer);
+
+        return customer;
     }
 }

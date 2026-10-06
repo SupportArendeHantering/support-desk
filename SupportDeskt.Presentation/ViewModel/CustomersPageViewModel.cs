@@ -25,13 +25,6 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
     [ObservableProperty]
     public partial string EditEmailAddress { get; set; } = string.Empty;
 
-    private Customer? _selectedCustomer;
-    public Customer? SelectedCustomer
-    {
-        get => _selectedCustomer;
-        set => SetProperty(ref _selectedCustomer, value);
-    }
-
     [ObservableProperty]
     public partial string StatusMessage { get; private set; } = string.Empty;
 
@@ -78,6 +71,11 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
             Customers.Add(newCustomer);
             ResetInputFields();
         }
+        catch (InvalidOperationException ex)
+        {
+            StatusMessage = ex.Message;
+            return;
+        }
         catch (ArgumentException ex)
         {
             StatusMessage = ex.Message;
@@ -108,6 +106,12 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
 
         try
         {
+            if (string.IsNullOrEmpty(EditCustomerName) && string.IsNullOrEmpty(EditEmailAddress))
+            {
+                StatusMessage = "No changes provided";
+                return;
+            }
+
             var newName = string.IsNullOrWhiteSpace(EditCustomerName)
                 ? customer.Name.Value
                 : new CustomerName(EditCustomerName).Value;
@@ -116,12 +120,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
                 ? customer.Email.Value
                 : new Email(EditEmailAddress).Value;
 
-            await customerService.UpdateCustomerAsync(customer, newName, newEmail);
-
-            var updatedCustomer = new Customer(new CustomerName(newName), new Email(newEmail))
-            {
-                Id = customer.Id
-            };
+            var updatedCustomer = await customerService.UpdateCustomerAsync(customer, newName, newEmail);
 
             var index = Customers.IndexOf(customer);
             Customers[index] = updatedCustomer;
@@ -131,7 +130,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
             ResetInputFields();
 
         }
-        catch (ArgumentException ex)
+        catch (InvalidOperationException ex)
         {
             StatusMessage = ex.Message;
         }
@@ -144,7 +143,6 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
             IsBusy = false;
         }
     }
-
 
     private void ResetInputFields()
     {
