@@ -13,6 +13,12 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
 {
     public ObservableCollection<Customer> Customers { get; } = [];
 
+    [ObservableProperty]
+    public partial string CustomerName { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string EmailAddress { get; set; } = string.Empty;
+
     private Customer? _selectedCustomer;
     public Customer? SelectedCustomer
     {
@@ -52,5 +58,34 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
         {
             IsBusy = false;
         }
+    }
+
+    [RelayCommand]
+    private async Task SaveAsync()
+    {
+        IsBusy = true;
+        StatusMessage = string.Empty;
+
+        try
+        {
+            await customerService.RegisterCustomerAsync(CustomerName, EmailAddress);
+        }
+        catch (ArgumentException ex)
+        {
+            StatusMessage = ex.Message;
+            return;
+        }
+        catch (Exception)
+        {
+            StatusMessage = "Customer could not be saved.";
+            return;
+        }
+        finally
+        {
+            IsBusy = false;
+            StatusMessage = "Customer saved successfully.";
+        }
+
+       // navigationService.Navigate(AppPage.Customer);
     }
 }

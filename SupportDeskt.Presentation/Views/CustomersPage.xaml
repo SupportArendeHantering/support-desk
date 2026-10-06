@@ -19,8 +19,26 @@
                 Text="Här kommer kundlistan och kundhanteringen visas."
                 FontSize="16" />
 
+            <TextBox
+                Header="Customer Name"
+                PlaceholderText="Customer name..."
+                Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay}" />
+            <TextBox
+                Header="Email Address"
+                PlaceholderText="Email address..."
+                Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay}" />
+
+
+            <Button
+     Command="{x:Bind ViewModel.SaveCommand}">
+
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <SymbolIcon Symbol="Save" />
+                    <TextBlock Text="Save" />
+                </StackPanel>
+            </Button>
+
             <TextBlock
-          
                 Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
                 FontSize="16" />
         </StackPanel>
