@@ -74,7 +74,9 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
 
         try
         {
-            await customerService.RegisterCustomerAsync(CustomerName, EmailAddress);
+            var newCustomer = await customerService.RegisterCustomerAsync(CustomerName, EmailAddress);
+            Customers.Add(newCustomer);
+            ResetInputFields();
         }
         catch (ArgumentException ex)
         {
@@ -89,7 +91,6 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
         finally
         {
             IsBusy = false;
-            ResetInputFields();
         }   
     }
 
@@ -107,18 +108,28 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
 
         try
         {
-            if (string.IsNullOrWhiteSpace(EditCustomerName) && string.IsNullOrWhiteSpace(EditEmailAddress))
-            {
-                StatusMessage = "No changes provided.";
-                return;
-            }
+            var newName = string.IsNullOrWhiteSpace(EditCustomerName)
+                ? customer.Name.Value
+                : new CustomerName(EditCustomerName).Value;
 
-            var newName = string.IsNullOrWhiteSpace(EditCustomerName) ? customer.Name.Value : new CustomerName(EditCustomerName).Value;
-            var newEmail = string.IsNullOrWhiteSpace(EditEmailAddress) ? customer.Email.Value : new Email(EditEmailAddress).Value;
+            var newEmail = string.IsNullOrWhiteSpace(EditEmailAddress)
+                ? customer.Email.Value
+                : new Email(EditEmailAddress).Value;
 
             await customerService.UpdateCustomerAsync(customer, newName, newEmail);
 
+            var updatedCustomer = new Customer(new CustomerName(newName), new Email(newEmail))
+            {
+                Id = customer.Id
+            };
+
+            var index = Customers.IndexOf(customer);
+            Customers[index] = updatedCustomer;
+
             StatusMessage = "Customer updated successfully.";
+
+            ResetInputFields();
+
         }
         catch (ArgumentException ex)
         {
@@ -131,7 +142,6 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
         finally
         {
             IsBusy = false;
-            ResetInputFields();
         }
     }
 

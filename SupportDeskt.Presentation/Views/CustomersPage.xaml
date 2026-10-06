@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*" MinWidth="0" />
         </Grid.ColumnDefinitions>
 
-        <!-- Vänster Add New Customer -->
+        <!-- Left Add New Customer -->
         <StackPanel Grid.Column="0"
                     Spacing="12"
                     HorizontalAlignment="Stretch"
@@ -46,7 +46,7 @@
                        FontSize="16" />
         </StackPanel>
 
-        <!-- Höger Customer List -->
+        <!-- Right Customer List -->
         <StackPanel Grid.Column="1"
              Spacing="12"
              HorizontalAlignment="Stretch"
@@ -65,6 +65,9 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="Margin" Value="0" />
+                        <Setter Property="Margin" Value="0,0,0,12" />
                     </Style>
                 </ListView.ItemContainerStyle>
 
