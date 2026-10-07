@@ -15,7 +15,7 @@ public record Email
         if (!MailAddress.TryCreate(trimmedEmail, out var emailAddress) || emailAddress.Address != trimmedEmail)
             throw new ArgumentException("Invalid email format.", nameof(value));
 
-        Value = trimmedEmail;
+        Value = trimmedEmail.ToLower();
     }
 
     public override string ToString() => Value;

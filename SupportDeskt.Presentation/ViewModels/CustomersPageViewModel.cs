@@ -3,14 +3,13 @@ using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
 using SupportDesk.Domain.Models;
 using SupportDesk.Domain.ValueObjects;
-using SupportDeskt.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace SupportDeskt.Presentation.ViewModels;
 
-public partial class CustomersPageViewModel(ICustomerService customerService, INavigationService navigationService) : ObservableObject
+public partial class CustomersPageViewModel(ICustomerService customerService) : ObservableObject
 {
     public ObservableCollection<Customer> Customers { get; } = [];
 
