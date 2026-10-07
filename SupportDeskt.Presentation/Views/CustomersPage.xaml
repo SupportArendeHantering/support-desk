@@ -50,7 +50,8 @@
                        FontWeight="SemiBold" />
 
                 <ListView Grid.Column="1"
-                  ItemsSource="{x:Bind ViewModel.Customers}">
+                          ItemsSource="{x:Bind ViewModel.Customers}"
+                          SelectionMode="None">
 
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
