@@ -14,6 +14,7 @@
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 
 			<!-- Header -->
@@ -58,16 +59,12 @@
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 
-				<!-- Rubrik -->
-
 				<TextBox
                     Grid.Row="0"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Header="Rubrik"
                     Text="{x:Bind ViewModel.EditTitle, Mode=TwoWay}" />
-
-				<!-- Beskrivning -->
 
 				<TextBox
                     Grid.Row="1"
@@ -78,8 +75,6 @@
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
                     MinHeight="100" />
-
-				<!-- Kund -->
 
 				<ComboBox
                     Grid.Row="2"
@@ -98,8 +93,6 @@
 
 				</ComboBox>
 
-				<!-- Handläggare -->
-
 				<ComboBox
                     Grid.Row="2"
                     Grid.Column="1"
@@ -110,8 +103,6 @@
                     DisplayMemberPath="Name"
                     HorizontalAlignment="Stretch" />
 
-				<!-- Prioritet -->
-
 				<ComboBox
                     Grid.Row="3"
                     Grid.Column="0"
@@ -119,8 +110,6 @@
                     ItemsSource="{x:Bind ViewModel.Priorities}"
                     SelectedItem="{x:Bind ViewModel.SelectedPriority, Mode=TwoWay}"
                     HorizontalAlignment="Stretch" />
-
-				<!-- Status -->
 
 				<ComboBox
                     Grid.Row="3"
@@ -132,7 +121,7 @@
 
 			</Grid>
 
-			<!-- Save / feedback -->
+			<!-- Save -->
 
 			<StackPanel
                 Grid.Row="2"
@@ -148,6 +137,76 @@
 				<TextBlock
                     Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
                     TextWrapping="Wrap" />
+
+			</StackPanel>
+
+			<!-- Comments -->
+
+			<StackPanel
+                Grid.Row="3"
+                Spacing="12"
+                Margin="0,36,0,0">
+
+				<TextBlock
+                    Text="Kommentarer"
+                    FontSize="24"
+                    FontWeight="SemiBold" />
+
+				<TextBlock
+                    Text="Tidigare kommentarer för ärendet."
+                    Opacity="0.7" />
+
+				<ListView
+                    ItemsSource="{x:Bind ViewModel.Comments}"
+                    SelectionMode="None"
+                    MaxHeight="320">
+
+					<ListView.ItemTemplate>
+						<DataTemplate>
+
+							<Border
+                                Padding="14"
+                                Margin="0,4"
+                                BorderThickness="1"
+                                CornerRadius="8">
+
+								<StackPanel Spacing="6">
+
+									<TextBlock
+                                        Text="{Binding AuthorName}"
+                                        FontWeight="SemiBold" />
+
+									<TextBlock
+                                        Text="{Binding Text}"
+                                        TextWrapping="Wrap" />
+
+									<TextBlock
+                                        Text="{Binding CreatedAt}"
+                                        FontSize="12"
+                                        Opacity="0.6" />
+
+								</StackPanel>
+
+							</Border>
+
+						</DataTemplate>
+					</ListView.ItemTemplate>
+
+				</ListView>
+
+				<TextBox
+                    Header="Ny kommentar"
+                    PlaceholderText="Skriv en kommentar..."
+                    Text="{x:Bind ViewModel.NewCommentText, Mode=TwoWay}"
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    MinHeight="90" />
+
+				<Button
+                    Content="Lägg till kommentar"
+                    HorizontalAlignment="Left"
+                    Command="{x:Bind ViewModel.AddCommentCommand}"
+                    IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}" />
 
 			</StackPanel>
 

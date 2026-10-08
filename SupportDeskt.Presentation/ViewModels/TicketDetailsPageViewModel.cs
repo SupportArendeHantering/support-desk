@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SupportDesk.Application.Comments;
 using SupportDesk.Application.Customers;
 using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Models;
 using SupportDeskt.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SupportDeskt.Presentation.ViewModels;
@@ -14,7 +16,8 @@ public partial class TicketDetailsPageViewModel(
     INavigationService navigationService,
     ICustomerService customerService,
     ITicketService ticketService,
-    ITicketAssigneeService assigneeService) : ObservableObject
+    ITicketAssigneeService assigneeService,
+    ICommentService commentService) : ObservableObject
 {
     [ObservableProperty]
     public partial SupportTicket? Ticket { get; private set; }
@@ -28,6 +31,8 @@ public partial class TicketDetailsPageViewModel(
 
     public ObservableCollection<TicketStatus> Statuses { get; } =
         new(Enum.GetValues<TicketStatus>());
+
+    public ObservableCollection<CommentItem> Comments { get; } = [];
 
     [ObservableProperty]
     public partial string EditTitle { get; set; } = string.Empty;
@@ -46,6 +51,9 @@ public partial class TicketDetailsPageViewModel(
 
     [ObservableProperty]
     public partial TicketStatus SelectedStatus { get; set; }
+
+    [ObservableProperty]
+    public partial string NewCommentText { get; set; } = string.Empty;
 
     [ObservableProperty]
     public partial string StatusMessage { get; private set; } = string.Empty;
@@ -85,16 +93,7 @@ public partial class TicketDetailsPageViewModel(
                 Customers.Add(customer);
             }
 
-            SelectedCustomer = null;
-
-            foreach (var customer in Customers)
-            {
-                if (customer.Id == Ticket.AssignedCustomerId)
-                {
-                    SelectedCustomer = customer;
-                    break;
-                }
-            }
+            SelectedCustomer = Customers.FirstOrDefault(customer => customer.Id == Ticket.AssignedCustomerId);
 
             Assignees.Clear();
 
@@ -110,6 +109,7 @@ public partial class TicketDetailsPageViewModel(
                 SelectedAssignee =
                     assigneeService.GetAssigneeById(assigneeId);
             }
+            await LoadCommentsAsync();
         }
         catch (Exception)
         {
@@ -196,9 +196,95 @@ public partial class TicketDetailsPageViewModel(
         }
     }
 
+    private async Task LoadCommentsAsync()
+    {
+        if (Ticket is null)
+            return;
+
+        var comments =
+            await commentService.GetCommentsByTicketIdAsync(Ticket.Id);
+
+        Comments.Clear();
+
+        foreach (var comment in comments
+                     .OrderBy(comment => comment.CreatedAt))
+        {
+            var assignee =
+                assigneeService.GetAssigneeById(comment.CreatedBy);
+
+            Comments.Add(new CommentItem
+            {
+                AuthorName =
+                    assignee?.Name ?? "Okänd handläggare",
+
+                Text =
+                    comment.CommentText.Value,
+
+                CreatedAt =
+                    comment.CreatedAt
+            });
+        }
+    }
+
+    [RelayCommand]
+    private async Task AddCommentAsync()
+    {
+        if (Ticket is null)
+        {
+            StatusMessage = "Inget ärende har valts.";
+            return;
+        }
+
+        if (Ticket.AssigneeId is not int assigneeId)
+        {
+            StatusMessage =
+                "Tilldela en handläggare innan du lägger till en kommentar.";
+            return;
+        }
+
+        IsBusy = true;
+        StatusMessage = string.Empty;
+
+        try
+        {
+            await commentService.AddCommentAsync(
+                Ticket.Id,
+                assigneeId,
+                NewCommentText);
+
+            NewCommentText = string.Empty;
+
+            await LoadCommentsAsync();
+
+            StatusMessage = "Kommentaren lades till.";
+        }
+        catch (ArgumentException ex)
+        {
+            StatusMessage = ex.Message;
+        }
+        catch (Exception)
+        {
+            StatusMessage =
+                "Kommentaren kunde inte läggas till.";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
     [RelayCommand]
     private void Back()
     {
         navigationService.BackToTickets();
     }
+}
+
+public class CommentItem
+{
+    public string AuthorName { get; set; } = string.Empty;
+
+    public string Text { get; set; } = string.Empty;
+
+    public DateTime CreatedAt { get; set; }
 }
