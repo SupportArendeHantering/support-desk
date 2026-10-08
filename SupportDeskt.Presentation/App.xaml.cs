@@ -26,7 +26,9 @@ public partial class App : Application
         services.AddTransient<DashboardPage>();
         services.AddTransient<CustomersPage>();
         services.AddTransient<TicketsPage>();
+        services.AddTransient<TicketDetailsPage>();
 
+        services.AddTransient<TicketDetailsPageViewModel>();
         services.AddTransient<CustomersPageViewModel>();
         services.AddTransient<TicketsPageViewModel>();
 

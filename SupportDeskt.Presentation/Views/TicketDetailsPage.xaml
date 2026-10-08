@@ -1,0 +1,165 @@
+<Page
+    x:Class="SupportDeskt.Presentation.Views.TicketDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Loaded="Page_Loaded">
+
+    <ScrollViewer>
+        <Grid
+            Padding="32"
+            MaxWidth="1000"
+            HorizontalAlignment="Left">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Toppen -->
+            <StackPanel
+                Grid.Row="0"
+                Spacing="12"
+                Margin="0,0,0,32">
+
+                <Button
+                    Content="← Tillbaka till ärenden"
+                    Command="{x:Bind ViewModel.BackCommand}" />
+
+                <TextBlock
+                    Text="Ärendedetaljer"
+                    FontSize="32"
+                    FontWeight="SemiBold" />
+
+            </StackPanel>
+
+            <!-- Information -->
+            <Grid
+                Grid.Row="1"
+                ColumnSpacing="48"
+                RowSpacing="24">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Rubrik -->
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Spacing="6">
+
+                    <TextBlock
+                        Text="Rubrik"
+                        FontWeight="SemiBold"
+                        Opacity="0.7" />
+
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Ticket.Title.Value, Mode=OneWay}"
+                        FontSize="24"
+                        TextWrapping="Wrap" />
+
+                </StackPanel>
+
+                <!-- Beskrivning -->
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Spacing="6">
+
+                    <TextBlock
+                        Text="Beskrivning"
+                        FontWeight="SemiBold"
+                        Opacity="0.7" />
+
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Ticket.Description.Value, Mode=OneWay}"
+                        TextWrapping="Wrap" />
+
+                </StackPanel>
+
+                <!-- Kund -->
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Spacing="6">
+
+                    <TextBlock
+                        Text="Kund"
+                        FontWeight="SemiBold"
+                        Opacity="0.7" />
+
+                    <TextBlock
+                        Text="{x:Bind ViewModel.CustomerName, Mode=OneWay}" />
+
+                </StackPanel>
+
+                <!-- Handläggare -->
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Spacing="6">
+
+                    <TextBlock
+                        Text="Handläggare"
+                        FontWeight="SemiBold"
+                        Opacity="0.7" />
+
+                    <TextBlock
+                        Text="{x:Bind ViewModel.AssigneeName, Mode=OneWay}" />
+
+                </StackPanel>
+
+                <!-- Status -->
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Spacing="6">
+
+                    <TextBlock
+                        Text="Status"
+                        FontWeight="SemiBold"
+                        Opacity="0.7" />
+
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Ticket.Status, Mode=OneWay}" />
+
+                </StackPanel>
+
+                <!-- Prioritet -->
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Spacing="6">
+
+                    <TextBlock
+                        Text="Prioritet"
+                        FontWeight="SemiBold"
+                        Opacity="0.7" />
+
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Ticket.Priority, Mode=OneWay}" />
+
+                </StackPanel>
+
+            </Grid>
+
+            <TextBlock
+                Grid.Row="2"
+                Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                Margin="0,24,0,0" />
+
+        </Grid>
+    </ScrollViewer>
+
+</Page>
