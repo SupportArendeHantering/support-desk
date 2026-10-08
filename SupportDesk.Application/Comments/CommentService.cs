@@ -13,13 +13,14 @@ public class CommentService : ICommentService
     }
     public async Task AddCommentAsync(
         Guid ticketId,
-        Guid assigneeId,
+        int assigneeId,
         string commentText)
     {
         if (ticketId == Guid.Empty)
             throw new ArgumentException("Ticket is required.", nameof(ticketId));
-        if (assigneeId == Guid.Empty)
-            throw new ArgumentException("Assignee is required.", nameof(assigneeId));
+
+        if (assigneeId <= 0)
+            throw new ArgumentException( "Assignee is required.",nameof(assigneeId));
 
         CommentText validatedCommentText = new(commentText);
 
