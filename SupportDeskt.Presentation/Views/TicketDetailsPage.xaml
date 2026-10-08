@@ -4,162 +4,154 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Loaded="Page_Loaded">
 
-    <ScrollViewer>
-        <Grid
+	<ScrollViewer>
+		<Grid
             Padding="32"
-            MaxWidth="1000"
+            MaxWidth="1100"
             HorizontalAlignment="Left">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
 
-            <!-- Toppen -->
-            <StackPanel
+			<!-- Header -->
+
+			<StackPanel
                 Grid.Row="0"
                 Spacing="12"
-                Margin="0,0,0,32">
+                Margin="0,0,0,28">
 
-                <Button
+				<Button
+                    HorizontalAlignment="Left"
                     Content="← Tillbaka till ärenden"
                     Command="{x:Bind ViewModel.BackCommand}" />
 
-                <TextBlock
+				<TextBlock
                     Text="Ärendedetaljer"
                     FontSize="32"
                     FontWeight="SemiBold" />
 
-            </StackPanel>
+				<TextBlock
+                    Text="Visa och uppdatera information för supportärendet."
+                    Opacity="0.7" />
 
-            <!-- Information -->
-            <Grid
+			</StackPanel>
+
+			<!-- Form -->
+
+			<Grid
                 Grid.Row="1"
-                ColumnSpacing="48"
-                RowSpacing="24">
+                ColumnSpacing="24"
+                RowSpacing="20">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
 
-                <!-- Rubrik -->
-                <StackPanel
+				<!-- Rubrik -->
+
+				<TextBox
                     Grid.Row="0"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    Spacing="6">
+                    Header="Rubrik"
+                    Text="{x:Bind ViewModel.EditTitle, Mode=TwoWay}" />
 
-                    <TextBlock
-                        Text="Rubrik"
-                        FontWeight="SemiBold"
-                        Opacity="0.7" />
+				<!-- Beskrivning -->
 
-                    <TextBlock
-                        Text="{x:Bind ViewModel.Ticket.Title.Value, Mode=OneWay}"
-                        FontSize="24"
-                        TextWrapping="Wrap" />
-
-                </StackPanel>
-
-                <!-- Beskrivning -->
-                <StackPanel
+				<TextBox
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    Spacing="6">
+                    Header="Beskrivning"
+                    Text="{x:Bind ViewModel.EditDescription, Mode=TwoWay}"
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    MinHeight="100" />
 
-                    <TextBlock
-                        Text="Beskrivning"
-                        FontWeight="SemiBold"
-                        Opacity="0.7" />
+				<!-- Kund -->
 
-                    <TextBlock
-                        Text="{x:Bind ViewModel.Ticket.Description.Value, Mode=OneWay}"
-                        TextWrapping="Wrap" />
-
-                </StackPanel>
-
-                <!-- Kund -->
-                <StackPanel
+				<ComboBox
                     Grid.Row="2"
                     Grid.Column="0"
-                    Spacing="6">
+                    Header="Kund"
+                    PlaceholderText="Välj kund"
+                    ItemsSource="{x:Bind ViewModel.Customers}"
+                    SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}"
+                    HorizontalAlignment="Stretch">
 
-                    <TextBlock
-                        Text="Kund"
-                        FontWeight="SemiBold"
-                        Opacity="0.7" />
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name.Value}" />
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
 
-                    <TextBlock
-                        Text="{x:Bind ViewModel.CustomerName, Mode=OneWay}" />
+				</ComboBox>
 
-                </StackPanel>
+				<!-- Handläggare -->
 
-                <!-- Handläggare -->
-                <StackPanel
+				<ComboBox
                     Grid.Row="2"
                     Grid.Column="1"
-                    Spacing="6">
+                    Header="Handläggare"
+                    PlaceholderText="Välj handläggare"
+                    ItemsSource="{x:Bind ViewModel.Assignees}"
+                    SelectedItem="{x:Bind ViewModel.SelectedAssignee, Mode=TwoWay}"
+                    DisplayMemberPath="Name"
+                    HorizontalAlignment="Stretch" />
 
-                    <TextBlock
-                        Text="Handläggare"
-                        FontWeight="SemiBold"
-                        Opacity="0.7" />
+				<!-- Prioritet -->
 
-                    <TextBlock
-                        Text="{x:Bind ViewModel.AssigneeName, Mode=OneWay}" />
-
-                </StackPanel>
-
-                <!-- Status -->
-                <StackPanel
+				<ComboBox
                     Grid.Row="3"
                     Grid.Column="0"
-                    Spacing="6">
+                    Header="Prioritet"
+                    ItemsSource="{x:Bind ViewModel.Priorities}"
+                    SelectedItem="{x:Bind ViewModel.SelectedPriority, Mode=TwoWay}"
+                    HorizontalAlignment="Stretch" />
 
-                    <TextBlock
-                        Text="Status"
-                        FontWeight="SemiBold"
-                        Opacity="0.7" />
+				<!-- Status -->
 
-                    <TextBlock
-                        Text="{x:Bind ViewModel.Ticket.Status, Mode=OneWay}" />
-
-                </StackPanel>
-
-                <!-- Prioritet -->
-                <StackPanel
+				<ComboBox
                     Grid.Row="3"
                     Grid.Column="1"
-                    Spacing="6">
+                    Header="Status"
+                    ItemsSource="{x:Bind ViewModel.Statuses}"
+                    SelectedItem="{x:Bind ViewModel.SelectedStatus, Mode=TwoWay}"
+                    HorizontalAlignment="Stretch" />
 
-                    <TextBlock
-                        Text="Prioritet"
-                        FontWeight="SemiBold"
-                        Opacity="0.7" />
+			</Grid>
 
-                    <TextBlock
-                        Text="{x:Bind ViewModel.Ticket.Priority, Mode=OneWay}" />
+			<!-- Save / feedback -->
 
-                </StackPanel>
-
-            </Grid>
-
-            <TextBlock
+			<StackPanel
                 Grid.Row="2"
-                Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
-                Margin="0,24,0,0" />
+                Spacing="12"
+                Margin="0,28,0,0">
 
-        </Grid>
-    </ScrollViewer>
+				<Button
+                    Content="Spara ändringar"
+                    HorizontalAlignment="Left"
+                    Command="{x:Bind ViewModel.SaveCommand}"
+                    IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}" />
+
+				<TextBlock
+                    Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                    TextWrapping="Wrap" />
+
+			</StackPanel>
+
+		</Grid>
+	</ScrollViewer>
 
 </Page>
