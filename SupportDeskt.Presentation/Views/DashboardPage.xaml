@@ -2,6 +2,7 @@
     x:Class="SupportDeskt.Presentation.Views.DashboardPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.WinUI"
     Loaded="Page_Loaded">
 
     <ScrollViewer>
@@ -12,6 +13,7 @@
             HorizontalAlignment="Left">
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -32,6 +34,7 @@
 
                 <TextBlock
                     Text="En sammanfattning av alla supportärenden."
+                    FontSize="16"
                     Opacity="0.7" />
 
             </StackPanel>
@@ -71,7 +74,8 @@
 
             <Grid
                 Grid.Row="2"
-                ColumnSpacing="16">
+                ColumnSpacing="16"
+                Margin="0,0,0,28">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -88,7 +92,7 @@
                     BorderThickness="1"
                     CornerRadius="8">
 
-                    <StackPanel Spacing="10">
+                    <StackPanel Spacing="8">
 
                         <TextBlock
                             Text="Nya ärenden"
@@ -100,17 +104,13 @@
                             FontSize="32"
                             FontWeight="SemiBold" />
 
-                        <ProgressBar
-                            Minimum="0"
-                            Maximum="100"
-                            Value="{x:Bind ViewModel.NewTicketsPercentage, Mode=OneWay}" />
-
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="4">
 
                             <TextBlock
                                 Text="{x:Bind ViewModel.NewTicketsPercentage, Mode=OneWay}"
+                                FontWeight="SemiBold"
                                 Opacity="0.7" />
 
                             <TextBlock
@@ -132,7 +132,7 @@
                     BorderThickness="1"
                     CornerRadius="8">
 
-                    <StackPanel Spacing="10">
+                    <StackPanel Spacing="8">
 
                         <TextBlock
                             Text="Pågående ärenden"
@@ -144,17 +144,13 @@
                             FontSize="32"
                             FontWeight="SemiBold" />
 
-                        <ProgressBar
-                            Minimum="0"
-                            Maximum="100"
-                            Value="{x:Bind ViewModel.OngoingTicketsPercentage, Mode=OneWay}" />
-
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="4">
 
                             <TextBlock
                                 Text="{x:Bind ViewModel.OngoingTicketsPercentage, Mode=OneWay}"
+                                FontWeight="SemiBold"
                                 Opacity="0.7" />
 
                             <TextBlock
@@ -176,7 +172,7 @@
                     BorderThickness="1"
                     CornerRadius="8">
 
-                    <StackPanel Spacing="10">
+                    <StackPanel Spacing="8">
 
                         <TextBlock
                             Text="Lösta ärenden"
@@ -188,17 +184,13 @@
                             FontSize="32"
                             FontWeight="SemiBold" />
 
-                        <ProgressBar
-                            Minimum="0"
-                            Maximum="100"
-                            Value="{x:Bind ViewModel.ResolvedTicketsPercentage, Mode=OneWay}" />
-
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="4">
 
                             <TextBlock
                                 Text="{x:Bind ViewModel.ResolvedTicketsPercentage, Mode=OneWay}"
+                                FontWeight="SemiBold"
                                 Opacity="0.7" />
 
                             <TextBlock
@@ -212,6 +204,98 @@
                 </Border>
 
             </Grid>
+
+
+            <!-- Donut section -->
+
+            <StackPanel
+                Grid.Row="3"
+                HorizontalAlignment="Center"
+                Spacing="10">
+
+                <TextBlock
+                    Text="Ärendefördelning"
+                    FontSize="18"
+                    FontWeight="SemiBold"
+                    HorizontalAlignment="Center" />
+
+                <lvc:PieChart
+                    Series="{x:Bind ViewModel.Series, Mode=OneWay}"
+                    Width="230"
+                    Height="230"
+                    Background="Transparent"
+                    LegendPosition="Hidden"
+                    TooltipPosition="Center"
+                    HorizontalAlignment="Center" />
+
+
+                <!-- Custom legend -->
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Spacing="22">
+
+
+                    <!-- New -->
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="7">
+
+                        <Ellipse
+                            Width="10"
+                            Height="10"
+                            Fill="Red"
+                            VerticalAlignment="Center" />
+
+                        <TextBlock
+                            Text="Nya"
+                            VerticalAlignment="Center" />
+
+                    </StackPanel>
+
+
+                    <!-- Ongoing -->
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="7">
+
+                        <Ellipse
+                            Width="10"
+                            Height="10"
+                            Fill="Gold"
+                            VerticalAlignment="Center" />
+
+                        <TextBlock
+                            Text="Pågående"
+                            VerticalAlignment="Center" />
+
+                    </StackPanel>
+
+
+                    <!-- Resolved -->
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="7">
+
+                        <Ellipse
+                            Width="10"
+                            Height="10"
+                            Fill="Green"
+                            VerticalAlignment="Center" />
+
+                        <TextBlock
+                            Text="Lösta"
+                            VerticalAlignment="Center" />
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </StackPanel>
 
         </Grid>
 
