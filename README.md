@@ -26,7 +26,41 @@ För att köra programmet:
 ### Beroendetabell mellan projekten
 
 ```mermaid
-graph LR
-    Domain --> Infrastructure
-    Infrastructure --> Presentation
+graph TD
+
+    Domain[Domain]:::core
+
+    Application[Application]:::layer
+    Infrastructure[Infrastructure]:::layer
+    Presentation[Presentation]:::layer
+
+    %% Dependencies
+    Application --> Domain
+    Infrastructure --> Application
+    Infrastructure --> Domain
+    Presentation --> Application
+    Presentation --> Infrastructure
+    Presentation --> Domain
+
+    classDef core fill:#f2f2f2,stroke:#333,stroke-width:1px,color:#000;
+    classDef layer fill:#ffffff,stroke:#666,stroke-width:1px,color:#000;
 ```
+
+## Datalagring
+
+Datan för kunder, support-tickets och kommentarer sparas i .json filer.
+filerna sparas i:  
+`AppData\Local\Packages\[PFN]\LocalCache\Local\SupportDesk`  
+där PFN (Package Family Name) som är ett unikt ID för installationen av applikationen och företaget som publicerat den.
+
+## Arbetsfördelning
+
+### Ali
+
+### Erik
+
+### Anton
+
+## Resultat av manuell kontroll
+
+## Ai användning i projektet
