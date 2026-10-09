@@ -1,4 +1,4 @@
-<Page
+﻿<Page
     x:Class="SupportDeskt.Presentation.Views.CustomersPage"
     x:Name="RootPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -17,16 +17,16 @@
         <StackPanel Grid.Column="0"
                     Spacing="12">
 
-            <TextBlock Text="Add New Customer"
+            <TextBlock Text="Lägg till ny kund"
                        FontSize="32"
                        FontWeight="SemiBold" />
 
-            <TextBox Header="Customer Name"
-                     PlaceholderText="Customer name..."
+            <TextBox Header="Kundnamn"
+                     PlaceholderText="Kundnamn..."
                      Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay}" />
 
-            <TextBox Header="Email Address"
-                     PlaceholderText="Email address..."
+            <TextBox Header="E-postadress"
+                     PlaceholderText="E-postadress..."
                      Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay}" />
 
             <Button HorizontalAlignment="Stretch"
@@ -34,7 +34,7 @@
                     Command="{x:Bind ViewModel.SaveCommand}">
                 <StackPanel Orientation="Horizontal" Spacing="10">
                     <SymbolIcon Symbol="Save" />
-                    <TextBlock Text="Save" />
+                    <TextBlock Text="Spara" />
                 </StackPanel>
             </Button>
 
@@ -45,7 +45,7 @@
         <!-- Right Customer List -->
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
             <StackPanel Grid.Column="1" Spacing="12">
-                <TextBlock Text="Customers"
+                <TextBlock Text="Kunder"
                        FontSize="32"
                        FontWeight="SemiBold" />
 
@@ -81,12 +81,12 @@
                                     HorizontalAlignment="Stretch">
 
                                     <TextBox HorizontalAlignment="Stretch"
-                                     Header="Change name to:"
+                                     Header="Ändra namn till:"
                                      PlaceholderText="{x:Bind Name}"
                                      Text="{Binding ElementName=RootPage, Path=ViewModel.EditCustomerName, Mode=TwoWay}" />
 
                                     <TextBox HorizontalAlignment="Stretch"
-                                     Header="Change email to:"
+                                     Header="Ändra e-post till:"
                                      PlaceholderText="{x:Bind Email}"
                                      Text="{Binding ElementName=RootPage, Path=ViewModel.EditEmailAddress, Mode=TwoWay}" />
 
@@ -96,7 +96,7 @@
                                     CommandParameter="{x:Bind}">
                                         <StackPanel Orientation="Horizontal" Spacing="10">
                                             <SymbolIcon Symbol="Edit" />
-                                            <TextBlock Text="Update" />
+                                            <TextBlock Text="Uppdatera" />
                                         </StackPanel>
                                     </Button>
 

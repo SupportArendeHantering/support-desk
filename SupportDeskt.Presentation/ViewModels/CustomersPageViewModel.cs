@@ -46,11 +46,11 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
             foreach (var customer in customers)
                 Customers.Add(customer);
 
-            StatusMessage = $"{Customers.Count} customers.";
+            StatusMessage = $"{Customers.Count} kunder.";
         }
         catch (Exception)
         {
-            StatusMessage = "The customers could not be loaded. Please check the file and path in the settings.";
+            StatusMessage = "Kundlista kunde inte laddas";
         }
         finally
         {
@@ -82,7 +82,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
         }
         catch (Exception)
         {
-            StatusMessage = "Customer could not be saved.";
+            StatusMessage = "Kunden kunde inte sparas!";
             return;
         }
         finally
@@ -96,7 +96,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
     {
         if (customer is null)
         {
-            StatusMessage = "No customer provided.";
+            StatusMessage = "Det finns ingen kund.";
             return;
         }
 
@@ -107,7 +107,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
         {
             if (string.IsNullOrEmpty(EditCustomerName) && string.IsNullOrEmpty(EditEmailAddress))
             {
-                StatusMessage = "No changes provided";
+                StatusMessage = "Inga ändringar att spara.";
                 return;
             }
 
@@ -124,7 +124,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
             var index = Customers.IndexOf(customer);
             Customers[index] = updatedCustomer;
 
-            StatusMessage = "Customer updated successfully.";
+            StatusMessage = "Kunden Updaterad.";
 
             ResetInputFields();
         }
@@ -139,7 +139,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
         }
         catch (Exception)
         {
-            StatusMessage = "Customer could not be updated.";
+            StatusMessage = "Kunden kunde inte updateras.";
         }
         finally
         {
