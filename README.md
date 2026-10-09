@@ -45,3 +45,10 @@ graph TD
     classDef core fill:#f2f2f2,stroke:#333,stroke-width:1px;
     classDef layer fill:#ffffff,stroke:#666,stroke-width:1px;
 ```
+
+## Datalagring
+
+Datan för kunder, support-tickets och kommentarer sparas i .json filer.
+filerna sparas i:  
+`AppData\Local\Packages\[PFN]\LocalCache\Local\SupportDesk`  
+där PFN (Package Family Name) som är ett unikt ID för installationen av applikationen och företaget som publicerat den.
