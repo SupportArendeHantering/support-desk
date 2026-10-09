@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
 using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Models;
+using SupportDeskt.Presentation.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,8 @@ namespace SupportDeskt.Presentation.ViewModels;
 
 public partial class TicketsPageViewModel(
     ITicketService ticketService,
-    ICustomerService customerService) : ObservableObject
+    ICustomerService customerService,
+    INavigationService navigationService) : ObservableObject
 {
     public ObservableCollection<SupportTicket> Tickets { get; } = [];
 
@@ -190,6 +192,11 @@ public partial class TicketsPageViewModel(
         SelectedStatus = null;
 
         await LoadAsync();
+    }
+
+    public void OpenTicket(SupportTicket ticket)
+    {
+        navigationService.NavigateToTicketDetails(ticket);
     }
 
     private void UpdateTicketList(IEnumerable<SupportTicket> tickets)

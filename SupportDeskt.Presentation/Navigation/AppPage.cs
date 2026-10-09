@@ -4,5 +4,6 @@ public enum AppPage
 {
     Home,
     Customer,
-    Ticket
+    Ticket,
+    TicketDetails
 }

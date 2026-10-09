@@ -147,12 +147,14 @@
             Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
             Margin="0,0,0,12" />
 
-		<ListView
-            Grid.Row="4"
-            ItemsSource="{x:Bind ViewModel.Tickets}"
-            SelectionMode="None">
+        <ListView
+             Grid.Row="4"
+             ItemsSource="{x:Bind ViewModel.Tickets}"
+             SelectionMode="None"
+             IsItemClickEnabled="True"
+             ItemClick="TicketsList_ItemClick">
 
-			<ListView.ItemTemplate>
+            <ListView.ItemTemplate>
 				<DataTemplate>
 
 					<Border
