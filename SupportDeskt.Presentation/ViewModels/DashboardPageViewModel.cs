@@ -3,6 +3,7 @@ using SupportDesk.Application.Tickets;
 using System.Threading.Tasks;
 using SupportDesk.Domain.Models;
 using System.Linq;
+using System;
 
 namespace SupportDeskt.Presentation.ViewModels;
 
@@ -12,13 +13,13 @@ public partial class DashboardPageViewModel(ITicketService ticketService) : Obse
     public partial int TotalTickets { get; private set; }
 
     [ObservableProperty]
-    public partial int NewTickets { get; private set; }
+    public partial double NewTickets { get; private set; }
 
     [ObservableProperty]
-    public partial int OngoingTickets { get; private set; }
+    public partial double OngoingTickets { get; private set; }
 
     [ObservableProperty]
-    public partial int ResolvedTickets { get; private set; }
+    public partial double ResolvedTickets { get; private set; }
 
     [ObservableProperty]
     public partial double NewTicketsPercentage { get; private set; }
@@ -42,9 +43,9 @@ public partial class DashboardPageViewModel(ITicketService ticketService) : Obse
 
         if (TotalTickets > 0)
         {
-            NewTicketsPercentage = (double)NewTickets / TotalTickets * 100;
-            OngoingTicketsPercentage = (double)OngoingTickets / TotalTickets * 100;
-            ResolvedTicketsPercentage = (double)ResolvedTickets / TotalTickets * 100;
+            NewTicketsPercentage = Math.Round(NewTickets / TotalTickets * 100);
+            OngoingTicketsPercentage =  Math.Round(OngoingTickets / TotalTickets * 100);
+            ResolvedTicketsPercentage = Math.Round(ResolvedTickets / TotalTickets * 100);
         }
         else
         {
