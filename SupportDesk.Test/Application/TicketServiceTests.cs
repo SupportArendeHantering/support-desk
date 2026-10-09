@@ -41,6 +41,7 @@ public class TicketServiceTests
         Assert.Equal("Cannot print", result.Description.Value);
         Assert.Equal(customerId, result.AssignedCustomerId);
         Assert.Equal(TicketPriority.High, result.Priority);
+        Assert.Equal(TicketStatus.New, result.Status);
 
         await ticketRepository.Received(1).AddTicketAsync(result);
     }
@@ -231,6 +232,62 @@ public class TicketServiceTests
         Assert.Contains(newTicket, result);
         Assert.Contains(resolvedTicket, result);
         Assert.DoesNotContain(ongoingTicket, result);
+    }
+
+    [Fact]
+    public async Task RegisterTicketAsync_WithEmptyTitle_ThrowsArgumentException()
+    {
+        // Arrange
+        var (ticketService, ticketRepository) = CreateService();
+        var customerId = Guid.NewGuid();
+
+        // Act
+        var act = () => ticketService.RegisterTicketAsync(
+            "   ",
+            "Description",
+            customerId,
+            TicketPriority.Normal);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentException>(act);
+
+        await ticketRepository
+            .DidNotReceive()
+            .AddTicketAsync(Arg.Any<SupportTicket>());
+    }
+
+    [Fact]
+    public async Task SearchTicketsByTitleAsync_IsCaseInsensitive()
+    {
+        // Arrange
+        var (ticketService, ticketRepository) = CreateService();
+
+        var printerTicket = new SupportTicket(
+            new TicketTitle("Printer Problem"),
+            new TicketDescription("Description"))
+        {
+            Id = Guid.NewGuid(),
+            AssignedCustomerId = Guid.NewGuid()
+        };
+
+        var networkTicket = new SupportTicket(
+            new TicketTitle("Network Error"),
+            new TicketDescription("Description"))
+        {
+            Id = Guid.NewGuid(),
+            AssignedCustomerId = Guid.NewGuid()
+        };
+
+        ticketRepository
+            .GetAllTicketsAsync()
+            .Returns([printerTicket, networkTicket]);
+
+        // Act
+        var result = await ticketService.SearchTicketsByTitleAsync("pRiNtEr");
+
+        // Assert
+        var foundTicket = Assert.Single(result);
+        Assert.Same(printerTicket, foundTicket);
     }
 
     private (TicketService ticketService, ITicketRepository ticketRepository) CreateService()
