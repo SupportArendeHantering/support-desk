@@ -10,7 +10,7 @@
         <Grid
             Padding="32"
             MaxWidth="1100"
-            HorizontalAlignment="Left">
+            HorizontalAlignment="Center">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -28,11 +28,13 @@
                 Margin="0,0,0,24">
 
                 <TextBlock
+                    HorizontalAlignment="Center"
                     Text="Översikt"
                     FontSize="32"
                     FontWeight="SemiBold" />
 
                 <TextBlock
+                    HorizontalAlignment="Center"
                     Text="En sammanfattning av alla supportärenden."
                     FontSize="16"
                     Opacity="0.7" />
@@ -52,18 +54,17 @@
                 <StackPanel Spacing="6">
 
                     <TextBlock
+                        HorizontalAlignment="Center"
                         Text="Totalt antal ärenden"
                         FontSize="16"
                         FontWeight="SemiBold" />
 
                     <TextBlock
+                        HorizontalAlignment="Center"
                         Text="{x:Bind ViewModel.TotalTickets, Mode=OneWay}"
                         FontSize="36"
                         FontWeight="SemiBold" />
 
-                    <TextBlock
-                        Text="Alla registrerade supportärenden"
-                        Opacity="0.7" />
 
                 </StackPanel>
 
