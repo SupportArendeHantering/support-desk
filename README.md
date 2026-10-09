@@ -45,31 +45,3 @@ graph TD
     classDef core fill:#f2f2f2,stroke:#333,stroke-width:1px;
     classDef layer fill:#ffffff,stroke:#666,stroke-width:1px;
 ```
-
-```mermaid
-graph TD
-
-    subgraph Core
-        Domain
-    end
-
-    subgraph Application Layer
-        Application
-    end
-
-    subgraph Infrastructure Layer
-        Infrastructure
-    end
-
-    subgraph Presentation Layer
-        Presentation
-    end
-
-    %% Dependencies
-    Application --> Domain
-    Infrastructure --> Application
-    Infrastructure --> Domain
-    Presentation --> Application
-    Presentation --> Infrastructure
-    Presentation --> Domain
-```
