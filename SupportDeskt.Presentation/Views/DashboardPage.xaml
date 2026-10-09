@@ -65,7 +65,6 @@
                         FontSize="36"
                         FontWeight="SemiBold" />
 
-
                 </StackPanel>
 
             </Border>
@@ -98,27 +97,22 @@
                         <TextBlock
                             Text="Nya ärenden"
                             FontSize="16"
-                            FontWeight="SemiBold" />
+                            FontWeight="SemiBold"
+                            HorizontalAlignment="Center" />
 
                         <TextBlock
+                            HorizontalAlignment="Center"
                             Text="{x:Bind ViewModel.NewTickets, Mode=OneWay}"
                             FontSize="32"
                             FontWeight="SemiBold" />
 
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Spacing="4">
-
-                            <TextBlock
-                                Text="{x:Bind ViewModel.NewTicketsPercentage, Mode=OneWay}"
-                                FontWeight="SemiBold"
-                                Opacity="0.7" />
-
-                            <TextBlock
-                                Text="% av alla ärenden"
-                                Opacity="0.7" />
-
-                        </StackPanel>
+                        <ProgressBar
+                            Minimum="0"
+                            Maximum="100"
+                            Value="100"
+                            Foreground="#E57373"
+                            Height="6"
+                            Margin="0,4,0,0" />
 
                     </StackPanel>
 
@@ -138,27 +132,22 @@
                         <TextBlock
                             Text="Pågående ärenden"
                             FontSize="16"
-                            FontWeight="SemiBold" />
+                            FontWeight="SemiBold"
+                            HorizontalAlignment="Center" />
 
                         <TextBlock
+                            HorizontalAlignment="Center"
                             Text="{x:Bind ViewModel.OngoingTickets, Mode=OneWay}"
                             FontSize="32"
                             FontWeight="SemiBold" />
 
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Spacing="4">
-
-                            <TextBlock
-                                Text="{x:Bind ViewModel.OngoingTicketsPercentage, Mode=OneWay}"
-                                FontWeight="SemiBold"
-                                Opacity="0.7" />
-
-                            <TextBlock
-                                Text="% av alla ärenden"
-                                Opacity="0.7" />
-
-                        </StackPanel>
+                        <ProgressBar
+                            Minimum="0"
+                            Maximum="100"
+                            Value="100"
+                            Foreground="#E6C65C"
+                            Height="6"
+                            Margin="0,4,0,0" />
 
                     </StackPanel>
 
@@ -178,27 +167,22 @@
                         <TextBlock
                             Text="Lösta ärenden"
                             FontSize="16"
-                            FontWeight="SemiBold" />
+                            FontWeight="SemiBold"
+                            HorizontalAlignment="Center" />
 
                         <TextBlock
+                            HorizontalAlignment="Center"
                             Text="{x:Bind ViewModel.ResolvedTickets, Mode=OneWay}"
                             FontSize="32"
                             FontWeight="SemiBold" />
 
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Spacing="4">
-
-                            <TextBlock
-                                Text="{x:Bind ViewModel.ResolvedTicketsPercentage, Mode=OneWay}"
-                                FontWeight="SemiBold"
-                                Opacity="0.7" />
-
-                            <TextBlock
-                                Text="% av alla ärenden"
-                                Opacity="0.7" />
-
-                        </StackPanel>
+                        <ProgressBar
+                            Minimum="0"
+                            Maximum="100"
+                            Value="100"
+                            Foreground="#66BB6A"
+                            Height="6"
+                            Margin="0,4,0,0" />
 
                     </StackPanel>
 
@@ -247,7 +231,7 @@
                         <Ellipse
                             Width="10"
                             Height="10"
-                            Fill="Red"
+                            Fill="#E57373"
                             VerticalAlignment="Center" />
 
                         <TextBlock
@@ -266,7 +250,7 @@
                         <Ellipse
                             Width="10"
                             Height="10"
-                            Fill="Gold"
+                            Fill="#E6C65C"
                             VerticalAlignment="Center" />
 
                         <TextBlock
@@ -285,7 +269,7 @@
                         <Ellipse
                             Width="10"
                             Height="10"
-                            Fill="Green"
+                            Fill="#66BB6A"
                             VerticalAlignment="Center" />
 
                         <TextBlock
