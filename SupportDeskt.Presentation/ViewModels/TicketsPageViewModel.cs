@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
+using SupportDesk.Application.Extensions;
+using SupportDesk.Application.Notifications;
 using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Models;
 using SupportDeskt.Presentation.Navigation;
@@ -15,7 +17,8 @@ namespace SupportDeskt.Presentation.ViewModels;
 public partial class TicketsPageViewModel(
     ITicketService ticketService,
     ICustomerService customerService,
-    INavigationService navigationService) : ObservableObject
+    INavigationService navigationService,
+    INotificationService notificationService) : ObservableObject
 {
     public ObservableCollection<SupportTicket> Tickets { get; } = [];
 
@@ -75,12 +78,11 @@ public partial class TicketsPageViewModel(
             {
                 Customers.Add(customer);
             }
-
-            StatusMessage = $"{Tickets.Count} ärenden.";
         }
         catch (Exception)
         {
             StatusMessage = "Ärendena kunde inte laddas.";
+            notificationService.Show(StatusMessage, InfoType.Error);
         }
         finally
         {
@@ -94,6 +96,7 @@ public partial class TicketsPageViewModel(
         if (NewTicketCustomer is null)
         {
             StatusMessage = "Välj en kund.";
+            notificationService.Show(StatusMessage, InfoType.Warning);
             return;
         }
 
@@ -116,18 +119,22 @@ public partial class TicketsPageViewModel(
             NewTicketPriority = TicketPriority.Low;
 
             StatusMessage = "Ärendet skapades.";
+            notificationService.Show(StatusMessage, InfoType.Success);
         }
         catch (ArgumentException ex)
         {
-            StatusMessage = ex.Message;
+            StatusMessage = ex.ToUiMessage();
+            notificationService.Show(StatusMessage, InfoType.Error);
         }
         catch (InvalidOperationException ex)
         {
-            StatusMessage = ex.Message;
+            StatusMessage = ex.ToUiMessage();
+                notificationService.Show(StatusMessage, InfoType.Error);
         }
         catch (Exception)
         {
             StatusMessage = "Ärendet kunde inte skapas.";
+            notificationService.Show(StatusMessage, InfoType.Error);
         }
         finally
         {
@@ -173,10 +180,12 @@ public partial class TicketsPageViewModel(
                     .ToList());
 
             StatusMessage = $"{Tickets.Count} ärenden hittades.";
+            notificationService.Show(StatusMessage);
         }
         catch (Exception)
         {
             StatusMessage = "Sökningen kunde inte genomföras.";
+            notificationService.Show(StatusMessage, InfoType.Error);
         }
         finally
         {
