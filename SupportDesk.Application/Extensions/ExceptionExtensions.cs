@@ -9,3 +9,4 @@
             return index > 0 ? message[..index] : message;
         }
     }
+}
