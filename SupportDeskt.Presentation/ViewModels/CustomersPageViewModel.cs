@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
+using SupportDesk.Application.Notifications;
 using SupportDesk.Domain.Models;
 using SupportDesk.Domain.ValueObjects;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SupportDeskt.Presentation.ViewModels;
 
-public partial class CustomersPageViewModel(ICustomerService customerService) : ObservableObject
+public partial class CustomersPageViewModel(ICustomerService customerService, INotificationService notificationService) : ObservableObject
 {
     public ObservableCollection<Customer> Customers { get; } = [];
 
@@ -45,12 +46,11 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
 
             foreach (var customer in customers)
                 Customers.Add(customer);
-
-            StatusMessage = $"{Customers.Count} kunder.";
         }
         catch (Exception)
         {
             StatusMessage = "Kundlista kunde inte laddas";
+            notificationService.Show(StatusMessage, InfoType.Error);
         }
         finally
         {
@@ -69,20 +69,25 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
             var newCustomer = await customerService.RegisterCustomerAsync(CustomerName, EmailAddress);
             Customers.Add(newCustomer);
             ResetInputFields();
+            StatusMessage = "Kunden sparad.";
+            notificationService.Show(StatusMessage, InfoType.Success);
         }
         catch (InvalidOperationException ex)
         {
             StatusMessage = ex.Message;
+            notificationService.Show(StatusMessage, InfoType.Error);
             return;
         }
         catch (ArgumentException ex)
         {
             StatusMessage = ex.Message;
+            notificationService.Show(StatusMessage, InfoType.Error);
             return;
         }
         catch (Exception)
         {
             StatusMessage = "Kunden kunde inte sparas!";
+            notificationService.Show(StatusMessage, InfoType.Warning);
             return;
         }
         finally
@@ -97,6 +102,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
         if (customer is null)
         {
             StatusMessage = "Det finns ingen kund.";
+            notificationService.Show(StatusMessage, InfoType.Warning);
             return;
         }
 
@@ -108,6 +114,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
             if (string.IsNullOrEmpty(EditCustomerName) && string.IsNullOrEmpty(EditEmailAddress))
             {
                 StatusMessage = "Inga ändringar att spara.";
+                notificationService.Show(StatusMessage, InfoType.Warning);
                 return;
             }
 
@@ -125,6 +132,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
             Customers[index] = updatedCustomer;
 
             StatusMessage = "Kunden Updaterad.";
+            notificationService.Show(StatusMessage, InfoType.Success);
 
             ResetInputFields();
         }
@@ -140,6 +148,7 @@ public partial class CustomersPageViewModel(ICustomerService customerService) : 
         catch (Exception)
         {
             StatusMessage = "Kunden kunde inte updateras.";
+            notificationService.Show(StatusMessage, InfoType.Error);
         }
         finally
         {

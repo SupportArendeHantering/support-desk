@@ -37,9 +37,6 @@
                     <TextBlock Text="Spara" />
                 </StackPanel>
             </Button>
-
-            <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
-                       FontSize="16" />
         </StackPanel>
 
         <!-- Right Customer List -->

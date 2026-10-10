@@ -49,11 +49,10 @@
 
         
         <InfoBar x:Name="StatusInfoBar"
-                 Title="Meddelande"
                  IsClosable="True"
                  IsOpen="False"
                  VerticalAlignment="Bottom"
-                 HorizontalAlignment="Right"
+                 HorizontalAlignment="Center"
                  Margin="24"
                  Width="350" />
     </Grid>

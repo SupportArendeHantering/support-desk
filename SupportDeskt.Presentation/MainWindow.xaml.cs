@@ -2,6 +2,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SupportDesk.Application.Notifications;
 using SupportDeskt.Presentation.Navigation;
+using System;
 
 namespace SupportDeskt.Presentation;
 
@@ -9,6 +10,7 @@ public sealed partial class MainWindow : Window
 {
     public INavigationService NavigationService { get; }
     private readonly INotificationService _notificationService;
+    private DispatcherTimer? _infoBarTimer;
 
     public MainWindow(INavigationService navigationService, INotificationService notificationService)
     {
@@ -38,6 +40,24 @@ public sealed partial class MainWindow : Window
                     _ => InfoBarSeverity.Informational
                 };
                 StatusInfoBar.IsOpen = true;
+
+                _infoBarTimer?.Stop();
+
+                if (args.Type is InfoType.Success or InfoType.Info or InfoType.Warning)
+                {
+                    _infoBarTimer = new DispatcherTimer
+                    {
+                        Interval = TimeSpan.FromSeconds(3)
+                    };
+
+                    _infoBarTimer.Tick += (_, _) =>
+                    {
+                        StatusInfoBar.IsOpen = false;
+                        _infoBarTimer.Stop();
+                    };
+
+                    _infoBarTimer.Start();
+                }
             });
         };
     }
