@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
+using SupportDesk.Application.Extensions;
 using SupportDesk.Application.Notifications;
 using SupportDesk.Domain.Models;
 using SupportDesk.Domain.ValueObjects;
@@ -74,13 +75,13 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
         }
         catch (InvalidOperationException ex)
         {
-            StatusMessage = ex.Message;
+            StatusMessage = ex.ToUiMessage();
             notificationService.Show(StatusMessage, InfoType.Error);
             return;
         }
         catch (ArgumentException ex)
         {
-            StatusMessage = ex.Message;
+            StatusMessage = ex.ToUiMessage();
             notificationService.Show(StatusMessage, InfoType.Error);
             return;
         }
@@ -138,11 +139,13 @@ public partial class CustomersPageViewModel(ICustomerService customerService, IN
         }
         catch (InvalidOperationException ex)
         {
-            StatusMessage = ex.Message;
+            StatusMessage = ex.ToUiMessage();
+            notificationService.Show(StatusMessage, InfoType.Error);
         }
         catch (ArgumentException ex)
         {
-            StatusMessage = ex.Message;
+            StatusMessage = ex.ToUiMessage();
+            notificationService.Show(StatusMessage, InfoType.Error);
             return;
         }
         catch (Exception)
