@@ -7,7 +7,7 @@ public record TicketTitle
     public TicketTitle(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Title is required.",nameof(value));
+            throw new ArgumentException("Du måste ange en titel.",nameof(value));
 
         value = value.Trim();
 
