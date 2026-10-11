@@ -80,7 +80,8 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Header="Kund"
-                    PlaceholderText="Välj kund"
+                    PlaceholderText="{x:Bind ViewModel.CustomersPlaceholder, Mode=OneWay}"
+                    IsEnabled="{x:Bind ViewModel.HasCustomers, Mode=OneWay}"
                     ItemsSource="{x:Bind ViewModel.Customers}"
                     SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}"
                     HorizontalAlignment="Stretch">
