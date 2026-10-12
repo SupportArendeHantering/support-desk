@@ -7,7 +7,7 @@ public record TicketDescription
     public TicketDescription(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Description is required",nameof(value));
+            throw new ArgumentException("Du behöver ange en beskrivning",nameof(value));
         value = value.Trim();
 
         Value = value;

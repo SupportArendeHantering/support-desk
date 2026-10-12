@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SupportDesk.Application.Comments;
 using SupportDesk.Application.Customers;
+using SupportDesk.Application.Notifications;
 using SupportDesk.Application.Tickets;
 
 namespace SupportDesk.Application
@@ -13,6 +14,7 @@ namespace SupportDesk.Application
             services.AddTransient<ITicketAssigneeService, TicketAssigneeService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddSingleton<INotificationService, NotificationService>();
             return services;
         }
     }

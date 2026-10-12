@@ -7,7 +7,7 @@ public record CommentText
     public CommentText (string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Comment text is required", nameof(value));
+            throw new ArgumentException("Du måste ange en kommentar", nameof(value));
         value = value.Trim();
 
         Value = value;
