@@ -53,12 +53,22 @@
                         Text="Totalt antal ärenden"
                         FontSize="16"
                         FontWeight="SemiBold" />
+                    
 
                     <TextBlock
                         HorizontalAlignment="Center"
                         Text="{x:Bind ViewModel.TotalTickets, Mode=OneWay}"
                         FontSize="36"
                         FontWeight="SemiBold" />
+                    <ProgressBar
+                        Minimum="0"
+                        Maximum="100"
+                        Value="100"
+                        Foreground="CornflowerBlue"
+                        Height="6"
+                        Width="180"
+                        Margin="0,4,0,0"/>
+
 
                 </StackPanel>
 
@@ -107,6 +117,7 @@
                             Value="100"
                             Foreground="#E57373"
                             Height="6"
+                            Width="100"
                             Margin="0,4,0,0" />
 
                     </StackPanel>
@@ -142,6 +153,7 @@
                             Value="100"
                             Foreground="#E6C65C"
                             Height="6"
+                            Width="100"
                             Margin="0,4,0,0" />
 
                     </StackPanel>
@@ -177,6 +189,7 @@
                             Value="100"
                             Foreground="#66BB6A"
                             Height="6"
+                            Width="100"
                             Margin="0,4,0,0" />
 
                     </StackPanel>
