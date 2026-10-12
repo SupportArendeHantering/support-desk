@@ -1,8 +1,20 @@
-﻿namespace SupportDesk.Domain.Models;
+﻿using SupportDesk.Domain.ValueObjects;
 
-public class Customer
+namespace SupportDesk.Domain.Models;
+
+public class Customer(CustomerName customerName, Email email)
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
+    public Guid Id { get; init; }
+    public CustomerName Name { get; set; } = customerName;
+    public Email Email { get; set; } = email;
+
+    public void Rename(CustomerName newName)
+    {
+        Name = newName;
+    }
+
+    public void ChangeEmail(Email newEmail)
+    {
+        Email = newEmail;
+    }
 }

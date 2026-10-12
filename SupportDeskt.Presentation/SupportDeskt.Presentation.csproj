@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
@@ -12,8 +12,14 @@
     <WinUISDKReferences>false</WinUISDKReferences>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
-	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Views\CustomersPage.xaml" />
+    <None Remove="Views\DashboardPage.xaml" />
+    <None Remove="Views\TicketDetailsPage.xaml" />
+    <None Remove="Views\TicketsPage.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -39,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2705" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1" />
@@ -47,6 +54,22 @@
     <ProjectReference Include="..\SupportDesk.Application\SupportDesk.Application.csproj" />
     <ProjectReference Include="..\SupportDesk.Domain\SupportDesk.Domain.csproj" />
     <ProjectReference Include="..\SupportDesk.Infrastructure\SupportDesk.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\TicketDetailsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CustomersPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\DashboardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\TicketsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--
