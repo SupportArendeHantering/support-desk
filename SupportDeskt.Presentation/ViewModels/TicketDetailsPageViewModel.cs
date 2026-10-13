@@ -67,9 +67,20 @@ public partial class TicketDetailsPageViewModel(
 
     public bool IsNotBusy => !IsBusy;
 
+    public bool HasCustomers => Customers.Count > 0;
+
+    public string CustomersPlaceholder =>
+        HasCustomers ? "Alla kunder" : "Inga kunder";
+
     public async Task LoadAsync()
     {
         Ticket = navigationService.SelectedTicket;
+
+        Customers.CollectionChanged += (_, _) =>
+        {
+            OnPropertyChanged(nameof(HasCustomers));
+            OnPropertyChanged(nameof(CustomersPlaceholder));
+        };
 
         if (Ticket is null)
         {
