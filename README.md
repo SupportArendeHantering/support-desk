@@ -55,6 +55,11 @@ där PFN (Package Family Name) som är ett unikt ID för installationen av appli
 
 ## Arbetsfördelning
 
+Vi delade upp vårat projekt i tickets på en trello-bräda där vi plockade tickets allt eftersom vi blev klara med en ticket. På så sätt kunde vi dela upp arbetet i små delar och arbeta med mindre pull requets och på så sätt undvika konflikter och att någon arbete blev låst under en lång tid. 
+
+<img width="1265" height="685" alt="image" src="https://github.com/user-attachments/assets/8b5b67d5-0581-4efd-b8e4-9ad6e9610a41" />
+
+
 ### Ali
 
 ### Erik
