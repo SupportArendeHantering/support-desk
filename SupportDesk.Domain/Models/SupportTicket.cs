@@ -26,14 +26,23 @@ public class SupportTicket(TicketTitle title, TicketDescription description)
     }
     public void ChangePriority(TicketPriority priority)
     {
+        if (!Enum.IsDefined(priority))
+            throw new ArgumentException("Ogiltig prioritet.", nameof(priority));
+
         Priority = priority;
         UpdatedAt = DateTime.UtcNow;
     }
     public void ChangeStatus(TicketStatus status)
     {
-        if ((status == TicketStatus.Ongoing || status == TicketStatus.Resolved) && AssigneeId is null)
+        if (!Enum.IsDefined(status))
+            throw new ArgumentException("Ogiltig status.", nameof(status));
+
+        if ((status == TicketStatus.Ongoing ||
+             status == TicketStatus.Resolved) &&
+            AssigneeId is null)
         {
-            throw new InvalidOperationException("En handledare behöver tilldelas innan du kan ändra status.");
+            throw new InvalidOperationException(
+                "En handledare behöver tilldelas innan du kan ändra status.");
         }
 
         Status = status;
