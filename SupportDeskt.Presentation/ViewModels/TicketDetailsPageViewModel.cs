@@ -243,7 +243,7 @@ public partial class TicketDetailsPageViewModel(
                     comment.CommentText.Value,
 
                 CreatedAt =
-                    comment.CreatedAt
+                    comment.CreatedAt.ToLocalTime()
             });
         }
     }
