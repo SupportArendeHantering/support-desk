@@ -13,6 +13,7 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
+    <Grid>
     <NavigationView
         x:Name="MainNavigation"
         PaneDisplayMode="Left"
@@ -46,4 +47,13 @@
 
     </NavigationView>
 
+        
+        <InfoBar x:Name="StatusInfoBar"
+                 IsClosable="True"
+                 IsOpen="False"
+                 VerticalAlignment="Bottom"
+                 HorizontalAlignment="Center"
+                 Margin="24"
+                 Width="350" />
+    </Grid>
 </Window>

@@ -33,7 +33,7 @@ public class SupportTicket(TicketTitle title, TicketDescription description)
     {
         if ((status == TicketStatus.Ongoing || status == TicketStatus.Resolved) && AssigneeId is null)
         {
-            throw new InvalidOperationException("An assignee is required before changing the status.");
+            throw new InvalidOperationException("En handledare behöver tilldelas innan du kan ändra status.");
         }
 
         Status = status;

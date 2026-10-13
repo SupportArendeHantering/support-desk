@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Comments;
 using SupportDesk.Application.Customers;
+using SupportDesk.Application.Extensions;
+using SupportDesk.Application.Notifications;
 using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Models;
 using SupportDeskt.Presentation.Navigation;
@@ -17,7 +19,8 @@ public partial class TicketDetailsPageViewModel(
     ICustomerService customerService,
     ITicketService ticketService,
     ITicketAssigneeService assigneeService,
-    ICommentService commentService) : ObservableObject
+    ICommentService commentService,
+    INotificationService notificationService) : ObservableObject
 {
     [ObservableProperty]
     public partial SupportTicket? Ticket { get; private set; }
@@ -82,6 +85,7 @@ public partial class TicketDetailsPageViewModel(
         if (Ticket is null)
         {
             StatusMessage = "Inget ärende har valts.";
+            notificationService.Show(StatusMessage, InfoType.Warning);
             return;
         }
 
@@ -126,6 +130,7 @@ public partial class TicketDetailsPageViewModel(
         {
             StatusMessage =
                 "Alla uppgifter för ärendet kunde inte laddas.";
+            notificationService.Show(StatusMessage, InfoType.Error);
         }
         finally
         {
@@ -139,12 +144,14 @@ public partial class TicketDetailsPageViewModel(
         if (Ticket is null)
         {
             StatusMessage = "Inget ärende har valts.";
+            notificationService.Show(StatusMessage, InfoType.Warning);
             return;
         }
 
         if (SelectedCustomer is null)
         {
             StatusMessage = "Välj en kund.";
+            notificationService.Show(StatusMessage, InfoType.Warning);
             return;
         }
 
@@ -188,18 +195,22 @@ public partial class TicketDetailsPageViewModel(
             }
 
             StatusMessage = "Ärendet uppdaterades.";
+            notificationService.Show(StatusMessage, InfoType.Success);
         }
         catch (ArgumentException ex)
         {
-            StatusMessage = ex.Message;
+            StatusMessage = ex.ToUiMessage();
+            notificationService.Show(StatusMessage, InfoType.Warning);
         }
         catch (InvalidOperationException ex)
         {
-            StatusMessage = ex.Message;
+            StatusMessage = ex.ToUiMessage();
+            notificationService.Show(StatusMessage, InfoType.Warning);
         }
         catch (Exception)
         {
             StatusMessage = "Ärendet kunde inte uppdateras.";
+            notificationService.Show(StatusMessage, InfoType.Warning);
         }
         finally
         {
@@ -243,6 +254,7 @@ public partial class TicketDetailsPageViewModel(
         if (Ticket is null)
         {
             StatusMessage = "Inget ärende har valts.";
+            notificationService.Show(StatusMessage, InfoType.Warning);
             return;
         }
 
@@ -250,6 +262,7 @@ public partial class TicketDetailsPageViewModel(
         {
             StatusMessage =
                 "Tilldela en handläggare innan du lägger till en kommentar.";
+            notificationService.Show(StatusMessage, InfoType.Warning);
             return;
         }
 
@@ -268,15 +281,18 @@ public partial class TicketDetailsPageViewModel(
             await LoadCommentsAsync();
 
             StatusMessage = "Kommentaren lades till.";
+            notificationService.Show(StatusMessage, InfoType.Success);
         }
         catch (ArgumentException ex)
         {
-            StatusMessage = ex.Message;
+            StatusMessage = ex.ToUiMessage();
+            notificationService.Show(StatusMessage, InfoType.Warning);
         }
         catch (Exception)
         {
             StatusMessage =
                 "Kommentaren kunde inte läggas till.";
+            notificationService.Show(StatusMessage, InfoType.Error);
         }
         finally
         {
