@@ -135,6 +135,28 @@ public class SupportTicketTests
         Assert.Equal(1, ticket.AssigneeId);
     }
 
+    [Fact]
+    public void ChangePriority_WithInvalidPriority_ThrowsArgumentException()
+    {
+        var ticket = CreateTicket();
+
+        var act = () =>
+            ticket.ChangePriority((TicketPriority)999);
+
+        Assert.Throws<ArgumentException>(act);
+    }
+
+    [Fact]
+    public void ChangeStatus_WithInvalidStatus_ThrowsArgumentException()
+    {
+        var ticket = CreateTicket();
+
+        var act = () =>
+            ticket.ChangeStatus((TicketStatus)999);
+
+        Assert.Throws<ArgumentException>(act);
+    }
+
     private static SupportTicket CreateTicket()
     {
         return new SupportTicket(
