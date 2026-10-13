@@ -23,10 +23,12 @@
 
             <TextBox Header="Kundnamn"
                      PlaceholderText="Kundnamn..."
+                     IsSpellCheckEnabled="false"
                      Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay}" />
 
             <TextBox Header="E-postadress"
                      PlaceholderText="E-postadress..."
+                     IsSpellCheckEnabled="false"
                      Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay}" />
 
             <Button HorizontalAlignment="Stretch"
@@ -80,11 +82,13 @@
                                     <TextBox HorizontalAlignment="Stretch"
                                      Header="Ändra namn till:"
                                      PlaceholderText="{x:Bind Name}"
+                                     IsSpellCheckEnabled="false"
                                      Text="{Binding ElementName=RootPage, Path=ViewModel.EditCustomerName, Mode=TwoWay}" />
 
                                     <TextBox HorizontalAlignment="Stretch"
                                      Header="Ändra e-post till:"
                                      PlaceholderText="{x:Bind Email}"
+                                     IsSpellCheckEnabled="false"
                                      Text="{Binding ElementName=RootPage, Path=ViewModel.EditEmailAddress, Mode=TwoWay}" />
 
                                     <Button HorizontalAlignment="Stretch"
