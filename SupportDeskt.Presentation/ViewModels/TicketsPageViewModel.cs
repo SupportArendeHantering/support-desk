@@ -60,6 +60,11 @@ public partial class TicketsPageViewModel(
 
     public bool IsNotBusy => !IsBusy;
 
+    public bool HasCustomers => Customers.Count > 0;
+
+    public string CustomersPlaceholder =>
+        HasCustomers ? "Alla kunder" : "Inga kunder";
+
     public async Task LoadAsync()
     {
         IsBusy = true;
@@ -67,6 +72,12 @@ public partial class TicketsPageViewModel(
 
         try
         {
+            Customers.CollectionChanged += (_, _) =>
+            {
+                OnPropertyChanged(nameof(HasCustomers));
+                OnPropertyChanged(nameof(CustomersPlaceholder));
+            };
+
             var tickets = await ticketService.GetAllTicketsAsync();
             var customers = await customerService.GetAllCustomersAsync();
 

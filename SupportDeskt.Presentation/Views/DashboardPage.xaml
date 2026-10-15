@@ -8,7 +8,7 @@
     <ScrollViewer>
 
         <Grid
-            Padding="32"
+            Padding="8"
             MaxWidth="1100"
             HorizontalAlignment="Center">
 
@@ -24,8 +24,8 @@
 
             <StackPanel
                 Grid.Row="0"
-                Spacing="6"
-                Margin="0,0,0,24">
+                Spacing="0"
+                Margin="0,0,0,0">
 
                 <TextBlock
                     HorizontalAlignment="Center"
@@ -33,11 +33,6 @@
                     FontSize="32"
                     FontWeight="SemiBold" />
 
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    Text="En sammanfattning av alla supportärenden."
-                    FontSize="16"
-                    Opacity="0.7" />
 
             </StackPanel>
 
@@ -46,24 +41,34 @@
 
             <Border
                 Grid.Row="1"
-                Padding="20"
-                Margin="0,0,0,16"
+                Padding="10"
+                Margin="0,0,0,0"
                 BorderThickness="1"
                 CornerRadius="8">
 
-                <StackPanel Spacing="6">
+                <StackPanel Spacing="0">
 
                     <TextBlock
                         HorizontalAlignment="Center"
                         Text="Totalt antal ärenden"
                         FontSize="16"
                         FontWeight="SemiBold" />
+                    
 
                     <TextBlock
                         HorizontalAlignment="Center"
                         Text="{x:Bind ViewModel.TotalTickets, Mode=OneWay}"
                         FontSize="36"
                         FontWeight="SemiBold" />
+                    <ProgressBar
+                        Minimum="0"
+                        Maximum="100"
+                        Value="100"
+                        Foreground="CornflowerBlue"
+                        Height="6"
+                        Width="180"
+                        Margin="0,4,0,0"/>
+
 
                 </StackPanel>
 
@@ -74,7 +79,7 @@
 
             <Grid
                 Grid.Row="2"
-                ColumnSpacing="16"
+                ColumnSpacing="6"
                 Margin="0,0,0,28">
 
                 <Grid.ColumnDefinitions>
@@ -112,6 +117,7 @@
                             Value="100"
                             Foreground="#E57373"
                             Height="6"
+                            Width="100"
                             Margin="0,4,0,0" />
 
                     </StackPanel>
@@ -147,6 +153,7 @@
                             Value="100"
                             Foreground="#E6C65C"
                             Height="6"
+                            Width="100"
                             Margin="0,4,0,0" />
 
                     </StackPanel>
@@ -182,6 +189,7 @@
                             Value="100"
                             Foreground="#66BB6A"
                             Height="6"
+                            Width="100"
                             Margin="0,4,0,0" />
 
                     </StackPanel>
