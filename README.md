@@ -54,12 +54,26 @@ filerna sparas i:
 där PFN (Package Family Name) som är ett unikt ID för installationen av applikationen och företaget som publicerat den.
 
 ## Arbetsfördelning
+Då vi valde att bryta ner arbetet till mindre delar så har vi alla varit lite delaktiga i det mesta, men nedan följer en lite mer ingående uppdelning på fokusområden.
 
 ### Ali
 
 ### Erik
 
 ### Anton
+#### Backend
+- Value Objects för Customer 
+- JSON settingsfil
+- Tilldela Customer till SupportTicket
+- Tilldela Handledare till en SupportTicket
+- Filtrera Tickets efter status
+- Lagt till tester enhet och integration
+
+#### Frontend
+- Customer vyn
+- InfoBar som visar olika typer av info och felmeddelanden
+- Lagt till så att kunddropdown blir inaktiv när inga kunder finns inlaggda.
+
 
 ## Resultat av manuell kontroll
 
