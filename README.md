@@ -58,6 +58,20 @@ Då vi valde att bryta ner arbetet till mindre delar så har vi alla varit lite 
 
 ### Ali
 
+#### Backend
+- Value Objects för SupportTickets och kommentarer
+- Registrering och uppdatering av SupportTickets
+- Lägga till och visa kommentarer
+- JSON-repository för kommentarer
+- Lagt till enhetstester för kommentarshantering
+
+#### Frontend
+- Dashboard-vyn
+- Statistik över nya, pågående och avslutade ärenden
+- Procentberäkning för ärendestatus
+- Koppling mellan Dashboard och ViewModel
+
+
 ### Erik
 
 ### Anton
