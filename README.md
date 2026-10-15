@@ -73,6 +73,22 @@ Då vi valde att bryta ner arbetet till mindre delar så har vi alla varit lite 
 
 
 ### Erik
+#### Backend
+- Kundregistrering och JSON-lagring för kunder
+- Funktionalitet för att hämta och uppdatera kunder
+- Sökning efter ärenden på rubrik och kundnamn
+- Kombinerad sökning och statusfiltrering
+- Kommentarshantering kopplad till handläggare
+- Validering av status och prioritet
+
+#### Frontend
+- Grundstruktur för GUI och navigation
+- Registreringsvy för ärenden
+- TicketsPageViewModel
+- Detaljvy för ärenden
+- Tilldelning av handläggare och kund
+- Visning och registrering av kommentarer
+- Visning av kommentarernas tid i lokal tid
 
 ### Anton
 #### Backend
@@ -90,5 +106,34 @@ Då vi valde att bryta ner arbetet till mindre delar så har vi alla varit lite 
 
 
 ## Resultat av manuell kontroll
+Applikationen har gåtts igenom manuellt efter att funktionerna färdigställts.
+
+Följande kontrollerades:
+
+- Applikationen kan startas och navigering mellan Översikt, Ärenden och Kunder fungerar.
+- En ny kund kan registreras med namn och giltig e-postadress.
+- Befintliga kunder kan visas och uppdateras.
+- Ett nytt ärende kan registreras och kopplas till en kund.
+- Ärenden kan sökas på rubrik och kund samt filtreras på status.
+- Sökning och statusfilter kan kombineras.
+- Ett ärende kan öppnas i detaljvyn.
+- Titel, beskrivning, kund, prioritet, handläggare och status kan uppdateras.
+- Ett ärende kan inte ändras till Pågående eller Löst utan tilldelad handläggare.
+- Kommentarer kan läggas till och kopplas till den valda handläggaren.
+- Kommentarer visas i kronologisk ordning och med lokal tid.
+- Dashboarden visar totalt antal ärenden samt antal Nya, Pågående och Lösta ärenden.
+- Dashboardens värden uppdateras när ett ärendes status ändras.
+- Kunder, ärenden och kommentarer finns kvar efter att applikationen startats om.
+- Applikationen kan starta även om JSON-filerna ännu inte finns.
+- Felaktig JSON skrivs inte över med tom data vid misslyckad inläsning.
+- Validerings- och felmeddelanden visas i gränssnittet vid ogiltig inmatning eller misslyckade operationer.
+
+Den manuella kontrollen genomfördes tillsammans med de automatiserade enhets- och integrationstesterna.
 
 ## Ai användning i projektet
+AI-verktyg har använts som stöd under projektet, främst för förklaringar, felsökning, kodförslag och hjälp med att resonera kring lösningar.
+
+Förslag från AI har inte tagits in utan kontroll. Vi har granskat koden, anpassat den till projektets struktur och testat funktionerna både 
+manuellt och med automatiserade tester innan ändringar har mergeats.
+
+AI har bland annat använts för att diskutera validering, JSON-lagring, tester och felhantering
